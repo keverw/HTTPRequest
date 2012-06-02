@@ -52,6 +52,7 @@ var HTTPRequest = {
                 }
             }
             xhr.open(parameters.method, url, true);
+            xhr.setRequestHeader('User-Agent', parameters.useragent);
             xhr.send();
         }
 
@@ -110,7 +111,7 @@ var HTTPRequest = {
     {
         if (typeof exports == 'object' && exports) //This is a module, require XHR support.
         {
-            XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest; //Using xmlhttprequest 1.4.0 https://github.com/driverdan/node-XMLHttpRequest
+            XMLHttpRequest = require('./lib/XMLHttpRequest.js').XMLHttpRequest; //Using xmlhttprequest 1.4.0 https://github.com/driverdan/node-XMLHttpRequest
             return new XMLHttpRequest();
         }
         else //Thanks http://www.webmasterworld.com/javascript/4027629.htm
