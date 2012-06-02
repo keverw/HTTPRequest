@@ -95,7 +95,11 @@ var HTTPRequest = {
     },
     _firstcharpos: function (string)
     {
-    	console.log(string.split(''));
+    	var letters = string.split('');
+    	for (var key in letters)
+       	{
+       		console.log(letters[key]);
+       	}
     },
     _getXHR: function ()
     {
