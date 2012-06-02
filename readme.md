@@ -36,7 +36,7 @@ takes a decodeed url and Unencode's it, then returns it.
 
 *option names are NOT case sensitive.
 
-* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `navigator.userAgent`, if that fails is used `HTTPRequest JS/VERSION`
+* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. Setting this ONLY works on the server.
 * `QUERY` - `string` or `object` - appends to the end of the `url`.
 * `POST_DATA` - Post data `string` or `object`
 

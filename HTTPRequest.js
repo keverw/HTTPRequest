@@ -1,7 +1,5 @@
 var HTTPRequest = {
     //Public
-    version: '0.0.1',
-    defaultUA: 'HTTPRequest JS',
     post: function (url, data, callback, options)
     {
         var parameters = {
@@ -26,11 +24,6 @@ var HTTPRequest = {
     {
         parameters = this._key2lower(parameters);
 
-        if (typeof parameters.useragent == 'undefined')
-        {
-            parameters.useragent = this._GetUA();
-        }
-
         if (typeof parameters.method == 'undefined')
         {
             parameters.method = 'GET';
@@ -52,7 +45,14 @@ var HTTPRequest = {
                 }
             }
             xhr.open(parameters.method, url, true);
-            xhr.setRequestHeader('User-Agent', parameters.useragent);
+            if (typeof exports == 'object' && exports)
+            {
+                if (typeof parameters.useragent != 'undefined')
+                {
+                    xhr.setRequestHeader('User-Agent', parameters.useragent);
+                }
+            }
+
             xhr.send();
         }
 
@@ -140,25 +140,6 @@ var HTTPRequest = {
                 {
                     return null;
                 }
-            }
-        }
-    },
-    _GetUA: function ()
-    {
-        var temp_defaultUA = this.defaultUA + '/' + this.version;
-        if (typeof navigator == 'undefined')
-        {
-            return temp_defaultUA;
-        }
-        else
-        {
-            if (typeof navigator.userAgent == 'undefined')
-            {
-                return temp_defaultUA;
-            }
-            else
-            {
-                return navigator.userAgent;
             }
         }
     },
