@@ -26,6 +26,11 @@ options is not required, but it can be a object.
 
 same as get
 
+##put##
+`put(url, data, callback, options)`
+
+same as post
+
 ##encode##
 `encode(url)`
 
@@ -57,6 +62,3 @@ Everything as options, but also:
 * `status` - is HTTP code (like 404 or 200)
 * `headers` - is a object with the respone headers
 * `content` - The metadata `
-
-##Todo##
-Write a wrapper for `PUT`

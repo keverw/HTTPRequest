@@ -11,6 +11,17 @@ var HTTPRequest = {
 
         this.request(url, request_parms, callback, options);
     },
+    put: function (url, data, callback, options)
+    {
+        var parameters = {
+            METHOD: 'PUT',
+            data: data
+        };
+
+        var request_parms = this._mergeobjs(options, parameters);
+
+        this.request(url, request_parms, callback, options);
+    },
     get: function (url, callback, options)
     {
         var parameters = {
