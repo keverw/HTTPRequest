@@ -21,6 +21,11 @@ url and callback are required.
 
 options is not required, but it can be a object.
 
+##delete##
+`del(url, callback, options)`
+
+same as get
+
 ##encode##
 `encode(url)`
 
@@ -54,4 +59,4 @@ Everything as options, but also:
 * `content` - The metadata `
 
 ##Todo##
-Write a wrapper for `PUT` and `DELETE`
+Write a wrapper for `PUT`

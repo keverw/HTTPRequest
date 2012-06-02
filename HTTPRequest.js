@@ -21,6 +21,16 @@ var HTTPRequest = {
 
         this.request(url, request_parms, callback);
     },
+    del: function (url, callback, options)
+    {
+        var parameters = {
+            METHOD: 'DELETE'
+        };
+
+        var request_parms = this._mergeobjs(options, parameters);
+
+        this.request(url, request_parms, callback);
+    },
     request: function (url, parameters, callback)
     {
         parameters = this._key2lower(parameters);
