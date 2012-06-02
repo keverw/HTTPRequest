@@ -1,4 +1,7 @@
 #HTTPRequest#
+
+*DO NOT USE, NOT READY*
+
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for client side and Serverside(Node.js) Javascript.
 
 ##request##
