@@ -6,7 +6,7 @@ if (typeof exports == 'object' && exports) //This is a module, XHR support.
 var HTTPRequest = {
     //Public
     version: '0.0.1',
-    defaultUA: 'HTTPRequest JS/' + this.version,
+    defaultUA: 'HTTPRequest JS',
     post: function (url, data, callback, options)
     {
         var parameters = {
@@ -30,6 +30,12 @@ var HTTPRequest = {
     request: function (url, parameters, callback)
     {
     	parameters = this._key2lower(parameters);
+    	
+    	if (typeof parameters.useragent == 'undefined')
+    	{
+    		parameters.useragent = this._GetUA();
+    	}
+    	
     	if (typeof parameters.method == 'undefined')
     	{
     		parameters.method = 'GET';
@@ -48,6 +54,25 @@ var HTTPRequest = {
         return 'later!';
     },
     //Private
+    _GetUA: function()
+    {
+    	var temp_defaultUA = this.defaultUA + '/' + this.version;
+    	if (typeof navigator == 'undefined')
+    	{
+    		return temp_defaultUA;
+    	}
+    	else
+    	{
+    		if (typeof navigator.userAgent == 'undefined')
+   			{
+	    		return temp_defaultUA;
+	    	}
+	    	else
+	    	{
+	    		return navigator.userAgent;
+	    	}
+    	}
+    },
     _key2lower: function (obj)
     {
         if (typeof obj === 'object')

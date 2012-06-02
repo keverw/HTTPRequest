@@ -33,7 +33,7 @@ takes a decodeed url and Unencode's it, then returns it.
 
 *option names are NOT case sensitive.
 
-* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `HTTPRequest JS/VERSION`
+* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `navigator.userAgent`, if that fails is used `HTTPRequest JS/VERSION`
 * `VERIFY_CERT` - boolen - If `true`, the server SSL certificate must be verifiable using one of the standard certificate authorities when making HTTPS requests. If `false`, any server SSL certificate will be accepted. Defaults to `true`. (Supported in version NOT YET)
 * `QUERY` - `string` or `object` - appends to the end of the `url`.
 * `POST_DATA` - Post data `string` or `object`
