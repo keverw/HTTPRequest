@@ -43,8 +43,15 @@ var HTTPRequest = {
         }
         else
         {
-            console.log(xhr);
-            callback('callback from req');
+        	xhr.onreadystatechange=function()
+  			{
+			  if (xhr.readyState == 4)
+			    {
+			    	callback(xhr.status, {} ,xhr.responseText);
+			    }
+			  }
+			xhr.open(parameters.method, url ,true);
+			xhr.send();
         }
 
     },
@@ -62,7 +69,7 @@ var HTTPRequest = {
         if (typeof exports == 'object' && exports) //This is a module, require XHR support.
         {
             XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest; //Using xmlhttprequest 1.4.0 https://github.com/driverdan/node-XMLHttpRequest
-            return XMLHttpRequest;
+            return new XMLHttpRequest();
         }
         else //Thanks http://www.webmasterworld.com/javascript/4027629.htm
         {
