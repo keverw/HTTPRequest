@@ -2,7 +2,7 @@
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for client side and Serverside(Node.js) Javascript.
 
 ##request##
-`request(url, parameters, data, callback)`
+`request(url, parameters, callback)`
 A lower level function, but I hope you never really need to use it as `post`, `get` is a wrapper around it.
 
 ##post##
@@ -35,13 +35,13 @@ takes a decodeed url and Unencode's it, then returns it.
 
 * `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `HTTPRequest JS/VERSION`
 * `VERIFY_CERT` - boolen - If `true`, the server SSL certificate must be verifiable using one of the standard certificate authorities when making HTTPS requests. If `false`, any server SSL certificate will be accepted. Defaults to `true`. (Supported in version NOT YET)
-* `QUERY` - string or object - appends to the end of the `url`.
-
+* `QUERY` - `string` or `object` - appends to the end of the `url`.
+* `POST_DATA` - Post data `string` or `object`
 
 ##parameters##
 Everything as options, but also:
 
-`METHOD` - string - `'GET'`, `'POST'`, `'PUT'` and `'DELETE'`
+`METHOD` - string - `'GET'`, `'POST'`, `'PUT'` and `'DELETE'`, default is `'GET'`
 
 ##callback##
 

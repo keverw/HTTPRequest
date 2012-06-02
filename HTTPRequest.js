@@ -25,12 +25,19 @@ var HTTPRequest = {
 
         var request_parms = this._mergeobjs(options, parameters);
         
-        callback('later');
+       	this.request(url, request_parms, callback);
     },
-    request: function (url, parameters, data, callback)
+    request: function (url, parameters, callback)
     {
     	parameters = this._key2lower(parameters);
-        callback('later');
+    	if (typeof parameters.method == 'undefined')
+    	{
+    		parameters.method = 'GET';
+    	}
+    	
+    	//Start request here...
+    	    	
+        callback('callback from req');
     },
     encode: function (url)
     {
