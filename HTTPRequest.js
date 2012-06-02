@@ -39,19 +39,20 @@ var HTTPRequest = {
         var xhr = this._getXHR();
         if (xhr == null) //NO XHR :(
         {
-            callback(0); //return an error code zero
+            callback(0, {}, null); //return an error code zero
         }
         else
         {
-        	xhr.onreadystatechange=function()
-  			{
-			  if (xhr.readyState == 4)
-			    {
-			    	callback(xhr.status, {} ,xhr.responseText);
-			    }
-			  }
-			xhr.open(parameters.method, url ,true);
-			xhr.send();
+        	var that = this;
+            xhr.onreadystatechange = function ()
+            {
+                if (xhr.readyState == 4)
+                {
+                    callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                }
+            }
+            xhr.open(parameters.method, url, true);
+            xhr.send();
         }
 
     },
@@ -64,6 +65,11 @@ var HTTPRequest = {
         return 'later!';
     },
     //Private
+    _headersToHeaders: function (headers)
+    {
+        console.log(headers);
+        return {};
+    },
     _getXHR: function ()
     {
         if (typeof exports == 'object' && exports) //This is a module, require XHR support.
