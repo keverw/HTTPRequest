@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Client Tests</title>
+<script type="text/javascript" src="../HTTPRequest.js"></script>
+<script type="text/javascript">
+function test_Get()
+{
+	HTTPRequest.get('http://localhost/get_test.php', function(status, headers, content)
+	{
+		console.log(status, headers, content)
+	});
+	
+	return false;
+}
+</script>
+</head>
+<body>
+<button onclick="test_Get()">Get</button>
+</body>
+</html>
