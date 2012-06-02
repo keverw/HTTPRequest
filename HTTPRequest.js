@@ -14,7 +14,6 @@ var HTTPRequest = {
         };
 
         var request_parms = this._mergeobjs(options, parameters);
-        request_parms = this._key2lower(parameters);
 
         callback('later');
     },
@@ -25,12 +24,12 @@ var HTTPRequest = {
         };
 
         var request_parms = this._mergeobjs(options, parameters);
-        request_parms = this._key2lower(parameters);
-
+        
         callback('later');
     },
     request: function (url, parameters, data, callback)
     {
+    	parameters = this._key2lower(parameters);
         callback('later');
     },
     encode: function (url)
