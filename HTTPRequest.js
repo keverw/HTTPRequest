@@ -70,36 +70,41 @@ var HTTPRequest = {
         if (headers_str.indexOf('\n') !== -1)
         {
             var headers_list = headers_str.split('\n');
-            
+
             var header_obj = {};
             for (var key in headers_list)
             {
-            	var header = headers_list[key];
-            	if (header.indexOf(':') !== -1)
-       			{
-       				console.log(this._firstcharpos(header));
-       				
-       				var field = '';
-       				var value = ''
-       				
-       			
-       			
-                	
+                var header = headers_list[key].replace(/\r/g, '');
+
+                if (header.indexOf(':') !== -1)
+                {
+                    var firstcharpos = this._firstcharpos(header, ':');
+
+                    var field = header.substring(0, firstcharpos);
+                    var value = header.substring(firstcharpos);
+                    value = value.substring(2);
+
+                    header_obj[field] = value;
                 }
             }
+            return header_obj;
         }
         else
         {
             return {};
         }
     },
-    _firstcharpos: function (string)
+    _firstcharpos: function (string, c)
     {
-    	var letters = string.split('');
-    	for (var key in letters)
-       	{
-       		console.log(letters[key]);
-       	}
+        var letters = string.split('');
+        for (var key in letters)
+        {
+            if (letters[key] == c)
+            {
+                return key;
+            }
+        }
+        return null;
     },
     _getXHR: function ()
     {
