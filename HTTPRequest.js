@@ -43,7 +43,7 @@ var HTTPRequest = {
         }
         else
         {
-        	var that = this;
+            var that = this;
             xhr.onreadystatechange = function ()
             {
                 if (xhr.readyState == 4)
@@ -65,10 +65,37 @@ var HTTPRequest = {
         return 'later!';
     },
     //Private
-    _headersToHeaders: function (headers)
+    _headersToHeaders: function (headers_str)
     {
-        console.log(headers);
-        return {};
+        if (headers_str.indexOf('\n') !== -1)
+        {
+            var headers_list = headers_str.split('\n');
+            
+            var header_obj = {};
+            for (var key in headers_list)
+            {
+            	var header = headers_list[key];
+            	if (header.indexOf(':') !== -1)
+       			{
+       				console.log(this._firstcharpos(header));
+       				
+       				var field = '';
+       				var value = ''
+       				
+       			
+       			
+                	
+                }
+            }
+        }
+        else
+        {
+            return {};
+        }
+    },
+    _firstcharpos: function (string)
+    {
+    	console.log(string.split(''));
     },
     _getXHR: function ()
     {
