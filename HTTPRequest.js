@@ -1,8 +1,3 @@
-if (typeof exports == 'object' && exports) //This is a module, XHR support.
-{
-    var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest; //Using xmlhttprequest 1.4.0 https://github.com/driverdan/node-XMLHttpRequest
-}
-
 var HTTPRequest = {
     //Public
     version: '0.0.1',
@@ -24,26 +19,34 @@ var HTTPRequest = {
         };
 
         var request_parms = this._mergeobjs(options, parameters);
-        
-       	this.request(url, request_parms, callback);
+
+        this.request(url, request_parms, callback);
     },
     request: function (url, parameters, callback)
     {
-    	parameters = this._key2lower(parameters);
-    	
-    	if (typeof parameters.useragent == 'undefined')
-    	{
-    		parameters.useragent = this._GetUA();
-    	}
-    	
-    	if (typeof parameters.method == 'undefined')
-    	{
-    		parameters.method = 'GET';
-    	}
-    	
-    	//Start request here...
-    	    	
-        callback('callback from req');
+        parameters = this._key2lower(parameters);
+
+        if (typeof parameters.useragent == 'undefined')
+        {
+            parameters.useragent = this._GetUA();
+        }
+
+        if (typeof parameters.method == 'undefined')
+        {
+            parameters.method = 'GET';
+        }
+
+        var xhr = this._getXHR();
+        if (xhr == null) //NO XHR :(
+        {
+            callback(0); //return an error code zero
+        }
+        else
+        {
+            console.log(xhr);
+            callback('callback from req');
+        }
+
     },
     encode: function (url)
     {
@@ -54,24 +57,60 @@ var HTTPRequest = {
         return 'later!';
     },
     //Private
-    _GetUA: function()
+    _getXHR: function ()
     {
-    	var temp_defaultUA = this.defaultUA + '/' + this.version;
-    	if (typeof navigator == 'undefined')
-    	{
-    		return temp_defaultUA;
-    	}
-    	else
-    	{
-    		if (typeof navigator.userAgent == 'undefined')
-   			{
-	    		return temp_defaultUA;
-	    	}
-	    	else
-	    	{
-	    		return navigator.userAgent;
-	    	}
-    	}
+        if (typeof exports == 'object' && exports) //This is a module, require XHR support.
+        {
+            XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest; //Using xmlhttprequest 1.4.0 https://github.com/driverdan/node-XMLHttpRequest
+            return XMLHttpRequest;
+        }
+        else //Thanks http://www.webmasterworld.com/javascript/4027629.htm
+        {
+            if (window.XMLHttpRequest)
+            {
+                // Chrome, Firefox, IE7+, Opera, Safari
+                return new XMLHttpRequest();
+            }
+            // IE6
+            try
+            {
+                // The latest stable version. It has the best security, performance, 
+                // reliability, and W3C conformance. Ships with Vista, and available 
+                // with other OS's via downloads and updates. 
+                return new ActiveXObject('MSXML2.XMLHTTP.6.0');
+            }
+            catch (e)
+            {
+                try
+                {
+                    // The fallback.
+                    return new ActiveXObject('MSXML2.XMLHTTP.3.0');
+                }
+                catch (e) //This browser is not AJAX enabled.
+                {
+                    return null;
+                }
+            }
+        }
+    },
+    _GetUA: function ()
+    {
+        var temp_defaultUA = this.defaultUA + '/' + this.version;
+        if (typeof navigator == 'undefined')
+        {
+            return temp_defaultUA;
+        }
+        else
+        {
+            if (typeof navigator.userAgent == 'undefined')
+            {
+                return temp_defaultUA;
+            }
+            else
+            {
+                return navigator.userAgent;
+            }
+        }
     },
     _key2lower: function (obj)
     {
