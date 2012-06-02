@@ -35,8 +35,12 @@ var HTTPRequest = {
         {
             if (typeof parameters.post_data == 'object')
             {
-                console.log(parameters.post_data);
-                parameters.post_data = '';
+              	var str = [];
+  				for(var key in parameters.post_data)
+  				{
+  					str.push(this.encode(key) + '=' + this.encode(parameters.post_data[key]));
+  				}	
+  				parameters.post_data = str.join('&');
             }
         }
 
@@ -67,11 +71,12 @@ var HTTPRequest = {
 
             if (parameters.method == 'POST')
             {
-                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 if (typeof parameters.post_data != 'undefined')
                 {
                     xhr.setRequestHeader("Content-length", parameters.post_data.length);
                 }
+                xhr.setRequestHeader("Connection", "close");
             }
 
             if (parameters.method == 'POST')
