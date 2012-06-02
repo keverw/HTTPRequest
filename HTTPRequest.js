@@ -44,7 +44,7 @@ var HTTPRequest = {
             }
         }
 
-        //do HTML
+        //do XHR
         var xhr = this._getXHR();
         if (xhr == null) //NO XHR :(
         {
@@ -74,9 +74,9 @@ var HTTPRequest = {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 if (typeof parameters.post_data != 'undefined')
                 {
-                    xhr.setRequestHeader("Content-length", parameters.post_data.length);
+                   // xhr.setRequestHeader("Content-length", parameters.post_data.length);
                 }
-                xhr.setRequestHeader("Connection", "close");
+                //xhr.setRequestHeader("Connection", "close");
             }
 
             if (parameters.method == 'POST')
@@ -164,7 +164,6 @@ var HTTPRequest = {
         // *     example 3: urldecode('http%3A%2F%2Fwww.google.nl%2Fsearch%3Fq%3Dphp.js%26ie%3Dutf-8%26oe%3Dutf-8%26aq%3Dt%26rls%3Dcom.ubuntu%3Aen-US%3Aunofficial%26client%3Dfirefox-a');
         // *     returns 3: 'http://www.google.nl/search?q=php.js&ie=utf-8&oe=utf-8&aq=t&rls=com.ubuntu:en-US:unofficial&client=firefox-a'
         return decodeURIComponent((str + '').replace(/\+/g, '%20'));
-
     },
     //Private
     _headersToHeaders: function (headers_str)
