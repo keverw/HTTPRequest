@@ -4,7 +4,7 @@ var HTTPRequest = {
     {
         var parameters = {
             METHOD: 'POST',
-            post_data: data
+            data: data
         };
 
         var request_parms = this._mergeobjs(options, parameters);
@@ -30,17 +30,17 @@ var HTTPRequest = {
             parameters.method = 'GET';
         }
 
-        //post_data
-        if (typeof parameters.post_data != 'undefined')
+        //data
+        if (typeof parameters.data != 'undefined')
         {
-            if (typeof parameters.post_data == 'object')
+            if (typeof parameters.data == 'object')
             {
               	var str = [];
-  				for(var key in parameters.post_data)
+  				for(var key in parameters.data)
   				{
-  					str.push(this.encode(key) + '=' + this.encode(parameters.post_data[key]));
+  					str.push(this.encode(key) + '=' + this.encode(parameters.data[key]));
   				}	
-  				parameters.post_data = str.join('&');
+  				parameters.data = str.join('&');
             }
         }
 
@@ -72,18 +72,28 @@ var HTTPRequest = {
             if (parameters.method == 'POST')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                if (typeof parameters.post_data != 'undefined')
+                if (typeof parameters.data != 'undefined')
                 {
-                   // xhr.setRequestHeader("Content-length", parameters.post_data.length);
+                   // xhr.setRequestHeader("Content-length", parameters.data.length);
+                }
+                //xhr.setRequestHeader("Connection", "close");
+            }
+            
+            if (parameters.method == 'POST' || parameters.method == 'PUT')
+            {
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                if (typeof parameters.data != 'undefined')
+                {
+                   // xhr.setRequestHeader("Content-length", parameters.data.length);
                 }
                 //xhr.setRequestHeader("Connection", "close");
             }
 
-            if (parameters.method == 'POST')
+            if (parameters.method == 'POST' || parameters.method == 'PUT')
             {
-                if (typeof parameters.post_data != 'undefined')
+                if (typeof parameters.data != 'undefined')
                 {
-                    xhr.send(parameters.post_data);
+                    xhr.send(parameters.data);
                 }
                 else
                 {

@@ -38,7 +38,7 @@ takes a decodeed url and Unencode's it, then returns it.
 
 * `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. Setting this ONLY works on the server.
 * `QUERY` - `string` or `object` - appends to the end of the `url`.
-* `POST_DATA` - Post data `string` or `object`
+* `DATA` - `'POST'` or `'PUT'` data `string` or `object`
 
 ##parameters##
 Everything as options, but also:
