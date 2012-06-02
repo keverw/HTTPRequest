@@ -177,7 +177,7 @@ var HTTPRequest = {
                 {
                     var firstcharpos = this._firstcharpos(header, ':');
 
-                    var field = header.substring(0, firstcharpos);
+                    var field = header.substring(0, firstcharpos).toLowerCase();
                     var value = header.substring(firstcharpos);
                     value = value.substring(2);
 
