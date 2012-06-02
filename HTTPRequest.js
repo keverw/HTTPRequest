@@ -3,12 +3,13 @@ var HTTPRequest = {
     post: function (url, data, callback, options)
     {
         var parameters = {
-            METHOD: 'POST'
+            METHOD: 'POST',
+            post_data: data
         };
 
         var request_parms = this._mergeobjs(options, parameters);
-
-        callback('later');
+        
+        this.request(url, request_parms, callback, options);
     },
     get: function (url, callback, options)
     {
@@ -28,7 +29,18 @@ var HTTPRequest = {
         {
             parameters.method = 'GET';
         }
+        
+        //post_data
+        if (typeof parameters.post_data != 'undefined')
+        {
+        	if (typeof parameters.post_data == 'object')
+        	{
+        		console.log(parameters.post_data);
+        		parameters.post_data = '';
+        	}
+        }
 
+		//do HTML
         var xhr = this._getXHR();
         if (xhr == null) //NO XHR :(
         {
@@ -52,8 +64,31 @@ var HTTPRequest = {
                     xhr.setRequestHeader('User-Agent', parameters.useragent);
                 }
             }
+            
+            if (parameters.method == 'POST')
+            {
+            	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            	if (typeof parameters.post_data != 'undefined')
+            	{
+            		xhr.setRequestHeader("Content-length", parameters.post_data.length);
+            	}
+            }
 
-            xhr.send();
+			if (parameters.method == 'POST')
+            {
+            	if (typeof parameters.post_data != 'undefined')
+            	{
+            		xhr.send(parameters.post_data);
+            	}
+            	else
+            	{
+            		xhr.send();
+            	}
+            }
+            else
+            {
+            	xhr.send();
+            }
         }
 
     },
