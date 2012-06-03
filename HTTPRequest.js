@@ -54,14 +54,19 @@ var HTTPRequest = {
         //data
         if (typeof parameters.data != 'undefined')
         {
-            if (typeof parameters.data == 'object')
+            parameters.data = this._objToQuery(parameters.data);
+        }
+
+        if (typeof parameters.query != 'undefined')
+        {
+            parameters.query = this._objToQuery(parameters.query);
+            if (url.indexOf('?') !== -1)
+            { //Has ?
+                url += '&' + parameters.query;
+            }
+            else //add ?
             {
-              	var str = [];
-  				for(var key in parameters.data)
-  				{
-  					str.push(this.encode(key) + '=' + this.encode(parameters.data[key]));
-  				}	
-  				parameters.data = str.join('&');
+                url += '?' + parameters.query;
             }
         }
 
@@ -95,17 +100,17 @@ var HTTPRequest = {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 if (typeof parameters.data != 'undefined')
                 {
-                   // xhr.setRequestHeader("Content-length", parameters.data.length);
+                    // xhr.setRequestHeader("Content-length", parameters.data.length);
                 }
                 //xhr.setRequestHeader("Connection", "close");
             }
-            
+
             if (parameters.method == 'POST' || parameters.method == 'PUT')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 if (typeof parameters.data != 'undefined')
                 {
-                   // xhr.setRequestHeader("Content-length", parameters.data.length);
+                    // xhr.setRequestHeader("Content-length", parameters.data.length);
                 }
                 //xhr.setRequestHeader("Connection", "close");
             }
@@ -197,6 +202,22 @@ var HTTPRequest = {
         return decodeURIComponent((str + '').replace(/\+/g, '%20'));
     },
     //Private
+    _objToQuery: function (obj)
+    {
+        if (typeof obj == 'object')
+        {
+            var str = [];
+            for (var key in obj)
+            {
+                str.push(this.encode(key) + '=' + this.encode(obj[key]));
+            }
+            return str.join('&');
+        }
+        else
+        {
+            return obj;
+        }
+    },
     _headersToHeaders: function (headers_str)
     {
         if (headers_str.indexOf('\n') !== -1)
