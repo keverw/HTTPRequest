@@ -1,4 +1,4 @@
-#HTTPRequest v0.0.1#
+#HTTPRequest v0.0.2#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript. Major thanks to [node-XMLHttpRequest](https://github.com/driverdan/node-XMLHttpRequest) for giving us a XMLHttpRequest Object, that really helps make this both client/server.
 
