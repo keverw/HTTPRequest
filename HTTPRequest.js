@@ -57,6 +57,19 @@ var HTTPRequest = {
             parameters.data = this._objToQuery(parameters.data);
         }
 
+        if (typeof parameters.query != 'undefined')
+        {
+            parameters.query = this._objToQuery(parameters.query);
+            if (url.indexOf('?') !== -1)
+            { //Has ?
+                url += '&' + parameters.query;
+            }
+            else //add ?
+            {
+                url += '?' + parameters.query;
+            }
+        }
+
         //do XHR
         var xhr = this._getXHR();
         if (xhr == null) //NO XHR :(
