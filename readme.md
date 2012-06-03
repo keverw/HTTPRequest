@@ -24,6 +24,8 @@ HTTPRequest.get('get_test.php', function(status, headers, content)
 });
 ```
 
+[Recaptcha](https://gist.github.com/2862894/bed9f28eb497e4810fee68d9600ace52469d6047) - A small [reCAPTCHA](http://www.google.com/recaptcha) module I wrote that depends on this module.
+
 ##request##
 `request(url, parameters, callback)`
 A lower level function, but I hope you never really need to use it as `post`, `get` is a wrapper around it.
