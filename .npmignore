@@ -1,4 +1,5 @@
 npm-debug.log
 node_modules/
 client_tests/
+server_tests/
 php_tests/

@@ -1,17 +1,28 @@
-#HTTPRequest#
+#HTTPRequest v0.0.1#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript. Major thanks to [node-XMLHttpRequest](https://github.com/driverdan/node-XMLHttpRequest) for giving us a XMLHttpRequest Object, that really helps make this both client/server.
 
 ## Setup##
 
-To set up HTTPRequest on your Node.js server use npm.
+To set up HTTPRequest on your Node.js server use npm(case sensitive package name).
 
-	npm install {ADD TO NPM LATER!}
+	npm install HTTPRequest
 
 If you want to use HTTPRequest on the client-side (browser), just include HTTPRequest.js into your page.
 
 	<script type='text/javascript' src='HTTPRequest.js'></script>
 
+##Example##
+First, you have to do is require the HTTPRequest module (if you're using it client-side, this isn't necessary).
+
+	var HTTPRequest = require('HTTPRequest');
+
+```
+HTTPRequest.get('get_test.php', function(status, headers, content)
+{
+	console.log(status, headers, content);
+});
+```
 
 ##request##
 `request(url, parameters, callback)`

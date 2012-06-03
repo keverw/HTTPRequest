@@ -1,0 +1,18 @@
+{
+  "author": "Kevin Whitman (https://github.com/keverw)",
+  "name": "HTTPRequest",
+  "description": "A simple yet powerful HTTP request library inspired by jQuery and LSL.",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keverw/HTTPRequest"
+  },
+  "main": "HTTPRequest.js",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}

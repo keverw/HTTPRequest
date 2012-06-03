@@ -10,7 +10,7 @@ function test_Get()
 	HTTPRequest.get('get_test.php', function(status, headers, content)
 	{
 		console.log(status, headers, content)
-	},  {useragent: 'IE 9001'});
+	});
 	
 	return false;
 }
