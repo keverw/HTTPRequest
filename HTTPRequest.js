@@ -1,3 +1,8 @@
+/*
+HTTPRequest v0.0.2
+https://github.com/keverw/HTTPRequest
+*/
+
 var HTTPRequest = {
     //Public
     post: function (url, data, callback, options)
