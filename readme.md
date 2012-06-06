@@ -103,6 +103,12 @@ Everything as options, but also:
 
 Write a option where any header can be set, this will only work on the serverside. this will also require changes to XMLHttpRequest.js(I have some ideas of a option that will disable the forbidden header check, might fork it, add a optional way to turn it off, use that build for this, and try to see if it get pulled in to the offical version)
 
+**v0.0.5:**
+Clean up and optimize code
+
+**v0.0.6:**
+Add XML support for `DATATYPE`, maybe?
+
 ##credits##
 * `trim` , `encode` and `encode` functions are from [php.js](http://phpjs.org/pages/home)
 * `parseJSON` function is from [jQuery v1.7.2](http://jquery.com/)

@@ -260,9 +260,7 @@ var HTTPRequest = {
                 // Logic borrowed from http://json.org/json2.js
                 if (rvalidchars.test(data.replace(rvalidescape, "@").replace(rvalidtokens, "]").replace(rvalidbraces, "")))
                 {
-
                     return (new Function("return " + data))();
-
                 }
             }
         }
