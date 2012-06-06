@@ -1,6 +1,6 @@
 #HTTPRequest v0.0.3 Experimental#
 
-This build has content_type support.
+This build has DATATYPE support.
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript.
 
@@ -72,7 +72,7 @@ takes a decodeed url and Unencode's it, then returns it.
 
 * `QUERY` - `string` or `object` - appends to the end of the `url`.
 * `DATA` - `'POST'` or `'PUT'` data `string` or `object`
-* `CONTENT_TYPE` - the requested content type. See content type section for more details. The value of this isn't case sensitive.
+* `DATATYPE` - the expected content type. See content type section for more details. The value of this isn't case sensitive.
 
 ##serverside only options##
 * `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. Setting this ONLY works on the server.
@@ -82,8 +82,8 @@ Everything as options, but also:
 
 `METHOD` - string - `'GET'`, `'POST'`, `'PUT'` and `'DELETE'`, default is `'GET'`
 
-##CONTENT_TYPE##
-`CONTENT_TYPE` can be set as the type of content you expected from the server. **currently only [JSON](http://en.wikipedia.org/wiki/JSON) is supported**
+##DATATYPE##
+`DATATYPE` can be set as the type of content you expected from the server. **currently only [JSON](http://en.wikipedia.org/wiki/JSON) is supported**
 
 * `JSON` - when set as json, callback `contents` will be a object of the JSON when valid JSON, `null` when invalid JSON.
 

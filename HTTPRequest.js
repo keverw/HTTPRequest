@@ -56,17 +56,17 @@ var HTTPRequest = {
         }
 
         //CONTENT TYPE
-        if (typeof parameters.content_type != 'undefined')
+        if (typeof parameters.datatype != 'undefined')
         {
-            parameters.content_type = parameters.content_type.toLowerCase();
-            if (parameters.content_type != 'json')
+            parameters.datatype = parameters.datatype.toLowerCase();
+            if (parameters.datatype != 'json')
             {
-                console.log('Invalid content_type option');
+                console.log('Invalid datatype option');
             }
         }
         else
         {
-            parameters.content_type = null;
+            parameters.datatype = null;
         }
 
         //data
@@ -101,7 +101,7 @@ var HTTPRequest = {
             {
                 if (xhr.readyState == 4) //HTTP results!
                 {
-                    if (parameters.content_type == 'json') //json
+                    if (parameters.datatype == 'json') //json
                     {
                         console.log(that.parseJSON(xhr.responseText)); //temp
                         callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
