@@ -103,8 +103,7 @@ var HTTPRequest = {
                 {
                     if (parameters.content_type == 'json') //json
                     {
-                        console.log(that.parseJSON(xhr.responseText));
-                        console.log('better json support later!');
+                        console.log(that.parseJSON(xhr.responseText)); //temp
                         callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
                     }
                     else //other
@@ -265,7 +264,6 @@ var HTTPRequest = {
                     return (new Function("return " + data))();
 
                 }
-                console.log("Invalid JSON: " + data);
             }
         }
         catch (e)
