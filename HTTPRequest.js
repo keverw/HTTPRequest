@@ -1,5 +1,5 @@
 /*
-HTTPRequest v0.0.5
+HTTPRequest v0.0.7
 https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
@@ -59,9 +59,13 @@ var HTTPRequest = {
         if (typeof parameters.datatype !== 'undefined')
         {
             parameters.datatype = parameters.datatype.toLowerCase();
-            if (parameters.datatype !== 'json' || parameters.datatype !== 'xml')
+            
+            var vaild_types = ['json', 'xml'];
+            
+            if (vaild_types.indexOf(parameters.datatype) == -1) {
             {
-                console.log('Invalid datatype option');
+            	parameters.datatype = null;
+            	console.log('Invalid datatype option');
             }
         }
         else
@@ -105,9 +109,11 @@ var HTTPRequest = {
                     {
                         callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
                     }
-                    else if (parameters.datatype === 'json') //xml
+                    else if (parameters.datatype === 'xml') //xml
                     {
-                    	callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                    	console.log(that.parseXML(xhr.responseText));
+                    	
+                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
                     }
                     else //other
                     {
@@ -163,7 +169,7 @@ var HTTPRequest = {
                 xhr.send();
             }
         }
-
+        }
     },
     encode: function (str)
     {
@@ -274,6 +280,10 @@ var HTTPRequest = {
         {
             return null;
         }
+    },
+    parseXML: function (xml)
+    {
+        
     },
     trim: function (str, charlist)
     {
