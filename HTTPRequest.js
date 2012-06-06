@@ -56,23 +56,20 @@ var HTTPRequest = {
         }
 
         //CONTENT TYPE
-        if (typeof parameters.datatype !== 'undefined')
+        if (typeof parameters.datatype == 'string')
         {
+        	console.log('I IS STRING');
             parameters.datatype = parameters.datatype.toLowerCase();
             
-            var vaild_types = ['json', 'xml'];
+            var vaild_types = ['json'];
             
             if (vaild_types.indexOf(parameters.datatype) == -1) {
             {
             	parameters.datatype = null;
-            	console.log('Invalid datatype option');
+            	throw('Invalid datatype option');
             }
-        }
-        else
-        {
-            parameters.datatype = null;
-        }
-
+        }        
+        
         //data
         if (typeof parameters.data !== 'undefined')
         {
@@ -105,15 +102,10 @@ var HTTPRequest = {
             {
                 if (xhr.readyState === 4) //HTTP results!
                 {
+                	console.log(parameters.datatype);
                     if (parameters.datatype === 'json') //json
                     {
                         callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
-                    }
-                    else if (parameters.datatype === 'xml') //xml
-                    {
-                    	console.log(that.parseXML(xhr.responseText));
-                    	
-                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
                     }
                     else //other
                     {
@@ -280,10 +272,6 @@ var HTTPRequest = {
         {
             return null;
         }
-    },
-    parseXML: function (xml)
-    {
-        
     },
     trim: function (str, charlist)
     {

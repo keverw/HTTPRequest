@@ -85,7 +85,6 @@ Everything as options, but also:
 `DATATYPE` can be set as the type of content you expected from the server.
 
 * [`JSON`](http://en.wikipedia.org/wiki/JSON) - when set as json, callback `contents` will be a object of the JSON when valid JSON, `null` when invalid JSON.
-* [`XML`](http://en.wikipedia.org/wiki/XML) - will convert to a object. If invaild, it will be null. *TODO*
 
 
 ##callback##
