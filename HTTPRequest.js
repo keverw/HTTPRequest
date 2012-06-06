@@ -1,5 +1,5 @@
 /*
-HTTPRequest v0.0.3
+HTTPRequest v0.0.5
 https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
