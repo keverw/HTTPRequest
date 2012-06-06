@@ -74,7 +74,7 @@ takes a decodeed url and Unencode's it, then returns it.
 
 ##serverside only options##
 * `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. This is a alias/shortcut insead of setting your own headers
-* `HEADERS` - An object containing your own defined headers. **TODO**
+* `HEADERS` - An object containing your own defined headers.
 
 ##parameters##
 Everything as options, but also:
@@ -95,10 +95,6 @@ Everything as options, but also:
 * `content` - contains the requests response.
 
 ##todo##
-
-**v0.0.4:**
-
-Write a option where any header can be set, this will only work on the serverside. this will also require changes to XMLHttpRequest.js(I have some ideas of a option that will disable the forbidden header check, might fork it, add a optional way to turn it off, use that build for this, and try to see if it get pulled in to the offical version)
 
 **v0.0.5:**
 Clean up and optimize code
