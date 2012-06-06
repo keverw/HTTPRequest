@@ -1,6 +1,4 @@
-#HTTPRequest v0.0.3 Experimental#
-
-This build has DATATYPE support.
+#HTTPRequest v0.0.3#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript.
 
