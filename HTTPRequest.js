@@ -1,5 +1,5 @@
 /*
-HTTPRequest v0.0.7
+HTTPRequest v0.0.8
 https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
@@ -64,99 +64,102 @@ var HTTPRequest = {
 
             if (vaild_types.indexOf(parameters.datatype) === -1)
             {
-                parameters.datatype = null;
                 throw ('Invalid datatype option');
             }
+        }
+        else
+        {
+            parameters.datatype = null;
+        }
 
-            //data
-            if (typeof parameters.data !== 'undefined')
+        //data
+        if (typeof parameters.data !== 'undefined')
+        {
+            parameters.data = this._objToQuery(parameters.data);
+        }
+
+        if (typeof parameters.query !== 'undefined')
+        {
+            parameters.query = this._objToQuery(parameters.query);
+            if (url.indexOf('?') !== -1)
+            { //Has ?
+                url += '&' + parameters.query;
+            }
+            else //add ?
             {
-                parameters.data = this._objToQuery(parameters.data);
+                url += '?' + parameters.query;
+            }
+        }
+
+        //do XHR
+        var xhr = this._getXHR();
+        if (xhr == null) //NO XHR :(
+        {
+            callback(0, {}, null); //return an error code zero
+        }
+        else
+        {
+            var that = this;
+            xhr.onreadystatechange = function ()
+            {
+                if (xhr.readyState === 4) //HTTP results!
+                {
+                    if (parameters.datatype === 'json') //json
+                    {
+                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
+                    }
+                    else //other
+                    {
+                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                    }
+                }
+            };
+
+            xhr.open(parameters.method, url, true);
+            if (typeof exports === 'object' && exports)
+            {
+                xhr.disableHeaderCheck(true); //Disable header check
+                if (typeof parameters.useragent !== 'undefined')
+                {
+                    xhr.setRequestHeader('User-Agent', parameters.useragent);
+                }
+
+                if (typeof parameters.headers === 'object')
+                {
+                    for (var key in parameters.headers)
+                    {
+                        if (parameters.headers.hasOwnProperty(key))
+                        {
+                            xhr.setRequestHeader(key, parameters.headers[key]);
+                        }
+                    }
+                }
             }
 
-            if (typeof parameters.query !== 'undefined')
+            if (parameters.method === 'POST')
             {
-                parameters.query = this._objToQuery(parameters.query);
-                if (url.indexOf('?') !== -1)
-                { //Has ?
-                    url += '&' + parameters.query;
-                }
-                else //add ?
-                {
-                    url += '?' + parameters.query;
-                }
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             }
 
-            //do XHR
-            var xhr = this._getXHR();
-            if (xhr == null) //NO XHR :(
+            if (parameters.method === 'POST' || parameters.method === 'PUT')
             {
-                callback(0, {}, null); //return an error code zero
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             }
-            else
+
+            if (parameters.method === 'POST' || parameters.method === 'PUT')
             {
-                var that = this;
-                xhr.onreadystatechange = function ()
+                if (typeof parameters.data !== 'undefined')
                 {
-                    if (xhr.readyState === 4) //HTTP results!
-                    {
-                        if (parameters.datatype === 'json') //json
-                        {
-                            callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
-                        }
-                        else //other
-                        {
-                            callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
-                        }
-                    }
-                };
-
-                xhr.open(parameters.method, url, true);
-                if (typeof exports === 'object' && exports)
-                {
-                    xhr.disableHeaderCheck(true); //Disable header check
-                    if (typeof parameters.useragent !== 'undefined')
-                    {
-                        xhr.setRequestHeader('User-Agent', parameters.useragent);
-                    }
-
-                    if (typeof parameters.headers === 'object')
-                    {
-                        for (var key in parameters.headers)
-                        {
-                            if (parameters.headers.hasOwnProperty(key))
-                            {
-                                xhr.setRequestHeader(key, parameters.headers[key]);
-                            }
-                        }
-                    }
-                }
-
-                if (parameters.method === 'POST')
-                {
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                }
-
-                if (parameters.method === 'POST' || parameters.method === 'PUT')
-                {
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                }
-
-                if (parameters.method === 'POST' || parameters.method === 'PUT')
-                {
-                    if (typeof parameters.data !== 'undefined')
-                    {
-                        xhr.send(parameters.data);
-                    }
-                    else
-                    {
-                        xhr.send();
-                    }
+                    xhr.send(parameters.data);
                 }
                 else
                 {
                     xhr.send();
                 }
+            }
+            else
+            {
+                xhr.send();
             }
         }
     },
