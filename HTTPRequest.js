@@ -99,11 +99,10 @@ var HTTPRequest = {
             var that = this;
             xhr.onreadystatechange = function ()
             {
-                if (xhr.readyState == 4) //HTTP results!
+                if (xhr.readyState === 4) //HTTP results!
                 {
-                    if (parameters.datatype == 'json') //json
+                    if (parameters.datatype === 'json') //json
                     {
-                        console.log(that.parseJSON(xhr.responseText)); //temp
                         callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
                     }
                     else //other
@@ -111,9 +110,10 @@ var HTTPRequest = {
                         callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
                     }
                 }
-            }
+            };
+            
             xhr.open(parameters.method, url, true);
-            if (typeof exports == 'object' && exports)
+            if (typeof exports === 'object' && exports)
             {
                 xhr.disableHeaderCheck(true); //Disable header check
                 if (typeof parameters.useragent != 'undefined')
@@ -235,7 +235,7 @@ var HTTPRequest = {
     {
         try
         {
-            if (typeof exports == 'object' && exports) //This is a module, use native JSON parser
+            if (typeof exports === 'object' && exports) //This is a module, use native JSON parser
             {
                 return JSON.parse(data);
             }
@@ -384,7 +384,7 @@ var HTTPRequest = {
     },
     _getXHR: function ()
     {
-        if (typeof exports == 'object' && exports) //This is a module, require XHR support.
+        if (typeof exports === 'object' && exports) //This is a module, require XHR support.
         {
             XMLHttpRequest = require('./lib/XMLHttpRequest.js').XMLHttpRequest; //Using xmlhttprequest 1.4.0 https://github.com/driverdan/node-XMLHttpRequest
             return new XMLHttpRequest();
@@ -461,7 +461,7 @@ var HTTPRequest = {
 };
 
 // Make a Node module, if possible.
-if (typeof exports == 'object' && exports)
+if (typeof exports === 'object' && exports)
 {
     module.exports = HTTPRequest;
 }
