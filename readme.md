@@ -73,7 +73,8 @@ takes a decodeed url and Unencode's it, then returns it.
 * `DATATYPE` - the expected content type. See content type section for more details. The value of this isn't case sensitive.
 
 ##serverside only options##
-* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. Setting this ONLY works on the server.
+* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. This is a alias/shortcut insead of setting your own headers
+* `HEADERS` - An object containing your own defined headers. **TODO**
 
 ##parameters##
 Everything as options, but also:
