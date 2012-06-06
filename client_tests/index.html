@@ -23,9 +23,18 @@ function test_Post()
 	});
 	return false;
 }
+
+function test_JSON()
+{
+	HTTPRequest.get('http://localhost/json.php', function(status, headers, content)
+	{
+		console.log(status, headers, content)
+	},{DATATYPE: 'json'});
+}
+
 </script>
 </head>
 <body>
-<button onclick="test_Get()">Get</button>&nbsp;<button onclick="test_Post()">Post</button>
+<button onclick="test_Get()">Get</button>&nbsp;<button onclick="test_Post()">Post</button>&nbsp;<button onclick="test_JSON()">JSON</button>
 </body>
 </html>

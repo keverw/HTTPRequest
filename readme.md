@@ -1,6 +1,8 @@
-#HTTPRequest v0.0.2#
+#HTTPRequest v0.0.3 Experimental#
 
-A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript. Major thanks to [node-XMLHttpRequest](https://github.com/driverdan/node-XMLHttpRequest) for giving us a XMLHttpRequest Object, that really helps make this both client/server.
+This build has DATATYPE support.
+
+A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript.
 
 ## Setup##
 
@@ -68,14 +70,22 @@ takes a decodeed url and Unencode's it, then returns it.
 
 *option names are NOT case sensitive.
 
-* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. Setting this ONLY works on the server.
 * `QUERY` - `string` or `object` - appends to the end of the `url`.
 * `DATA` - `'POST'` or `'PUT'` data `string` or `object`
+* `DATATYPE` - the expected content type. See content type section for more details. The value of this isn't case sensitive.
+
+##serverside only options##
+* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. Setting this ONLY works on the server.
 
 ##parameters##
 Everything as options, but also:
 
 `METHOD` - string - `'GET'`, `'POST'`, `'PUT'` and `'DELETE'`, default is `'GET'`
+
+##DATATYPE##
+`DATATYPE` can be set as the type of content you expected from the server. **currently only [JSON](http://en.wikipedia.org/wiki/JSON) is supported**
+
+* `JSON` - when set as json, callback `contents` will be a object of the JSON when valid JSON, `null` when invalid JSON.
 
 ##callback##
 
@@ -84,3 +94,22 @@ Everything as options, but also:
 * `status` - is HTTP code (like 404 or 200)
 * `headers` - is a object with the respone headers
 * `content` - The metadata `
+
+
+
+##todo##
+
+**v0.0.4:**
+
+Write a option where any header can be set, this will only work on the serverside. this will also require changes to XMLHttpRequest.js(I have some ideas of a option that will disable the forbidden header check, might fork it, add a optional way to turn it off, use that build for this, and try to see if it get pulled in to the offical version)
+
+**v0.0.5:**
+Clean up and optimize code
+
+**v0.0.6:**
+Add XML support for `DATATYPE`, maybe?
+
+##credits##
+* `trim` , `encode` and `encode` functions are from [php.js](http://phpjs.org/pages/home)
+* `parseJSON` function is from [jQuery v1.7.2](http://jquery.com/)
+* Major thanks to [node-XMLHttpRequest](https://github.com/driverdan/node-XMLHttpRequest) for giving us a XMLHttpRequest Object, that really helps make this both client/server.
