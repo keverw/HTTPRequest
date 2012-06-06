@@ -55,6 +55,20 @@ var HTTPRequest = {
         {
             parameters.method = 'GET';
         }
+        
+        //CONTENT TYPE
+        if (typeof parameters.content_type != 'undefined')
+        {
+            parameters.content_type = parameters.content_type.toLowerCase();
+            if (parameters.content_type != 'json')
+            {
+            	console.log('Invalid content_type option');
+            }
+        }
+        else
+        {
+        	parameters.content_type = null;
+        }
 
         //data
         if (typeof parameters.data != 'undefined')
@@ -84,11 +98,19 @@ var HTTPRequest = {
         else
         {
             var that = this;
-            xhr.onreadystatechange = function ()
+            xhr.onreadystatechange = function () 
             {
-                if (xhr.readyState == 4)
+                if (xhr.readyState == 4) //HTTP results!
                 {
-                    callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                	if (parameters.content_type == 'json') //json
+                	{
+                		console.log('better json support later!');
+                		callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                	}
+                	else //other
+                	{
+                    	callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                    }
                 }
             }
             xhr.open(parameters.method, url, true);
