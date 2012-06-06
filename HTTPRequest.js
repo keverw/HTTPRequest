@@ -115,10 +115,18 @@ var HTTPRequest = {
             xhr.open(parameters.method, url, true);
             if (typeof exports == 'object' && exports)
             {
+            	xhr.disableHeaderCheck(true); //Disable header check
                 if (typeof parameters.useragent != 'undefined')
-                {
-                	xhr.disableHeaderCheck(true); //Disable header check
+                {	
                     xhr.setRequestHeader('User-Agent', parameters.useragent);
+                }
+                
+                if (typeof parameters.headers == 'object')
+                {
+                	for (var key in parameters.headers)
+           			{
+           				xhr.setRequestHeader(key, parameters.headers[key]);
+	                }
                 }
             }
 
