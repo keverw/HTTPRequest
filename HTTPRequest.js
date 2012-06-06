@@ -111,7 +111,7 @@ var HTTPRequest = {
                     }
                 }
             };
-            
+
             xhr.open(parameters.method, url, true);
             if (typeof exports === 'object' && exports)
             {
@@ -327,7 +327,7 @@ var HTTPRequest = {
     //Private
     _objToQuery: function (obj)
     {
-        if (typeof obj == 'object')
+        if (typeof obj === 'object')
         {
             var str = [];
             for (var key in obj)
@@ -375,7 +375,7 @@ var HTTPRequest = {
         var letters = string.split('');
         for (var key in letters)
         {
-            if (letters[key] == c)
+            if (letters[key] === c)
             {
                 return key;
             }
@@ -437,12 +437,12 @@ var HTTPRequest = {
     _mergeobjs: function (obj1, obj2)
     {
         //Make sure they are objects!
-        if (typeof obj1 != 'object')
+        if (typeof obj1 !== 'object')
         {
             obj1 = {};
         }
 
-        if (typeof obj2 != 'object')
+        if (typeof obj2 !== 'object')
         {
             obj2 = {};
         }
