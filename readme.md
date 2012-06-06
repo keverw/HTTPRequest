@@ -83,9 +83,9 @@ Everything as options, but also:
 `METHOD` - string - `'GET'`, `'POST'`, `'PUT'` and `'DELETE'`, default is `'GET'`
 
 ##CONTENT_TYPE##
-`CONTENT_TYPE` can be set as the type of content you expected. **currently only `json` is supported**
+`CONTENT_TYPE` can be set as the type of content you expected from the server. **currently only [JSON](http://en.wikipedia.org/wiki/JSON) is supported**
 
-`json` - when set as json, contents will be a object of the json when vaild json, null when invaild json.
+* `JSON` - when set as json, callback `contents` will be a object of the JSON when valid JSON, `null` when invalid JSON.
 
 ##callback##
 
