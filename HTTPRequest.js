@@ -1,5 +1,5 @@
 /*
-HTTPRequest v0.0.5
+HTTPRequest v0.0.7
 https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
@@ -56,114 +56,109 @@ var HTTPRequest = {
         }
 
         //CONTENT TYPE
-        if (typeof parameters.datatype !== 'undefined')
+        if (typeof parameters.datatype === 'string')
         {
             parameters.datatype = parameters.datatype.toLowerCase();
-            if (parameters.datatype !== 'json' || parameters.datatype !== 'xml')
-            {
-                console.log('Invalid datatype option');
-            }
-        }
-        else
-        {
-            parameters.datatype = null;
-        }
 
-        //data
-        if (typeof parameters.data !== 'undefined')
-        {
-            parameters.data = this._objToQuery(parameters.data);
-        }
+            var vaild_types = ['json'];
 
-        if (typeof parameters.query !== 'undefined')
-        {
-            parameters.query = this._objToQuery(parameters.query);
-            if (url.indexOf('?') !== -1)
-            { //Has ?
-                url += '&' + parameters.query;
-            }
-            else //add ?
+            if (vaild_types.indexOf(parameters.datatype) === -1)
             {
-                url += '?' + parameters.query;
+                parameters.datatype = null;
+                throw ('Invalid datatype option');
             }
-        }
 
-        //do XHR
-        var xhr = this._getXHR();
-        if (xhr == null) //NO XHR :(
-        {
-            callback(0, {}, null); //return an error code zero
-        }
-        else
-        {
-            var that = this;
-            xhr.onreadystatechange = function ()
+            //data
+            if (typeof parameters.data !== 'undefined')
             {
-                if (xhr.readyState === 4) //HTTP results!
-                {
-                    if (parameters.datatype === 'json') //json
-                    {
-                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
-                    }
-                    else if (parameters.datatype === 'json') //xml
-                    {
-                    	callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
-                    }
-                    else //other
-                    {
-                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
-                    }
+                parameters.data = this._objToQuery(parameters.data);
+            }
+
+            if (typeof parameters.query !== 'undefined')
+            {
+                parameters.query = this._objToQuery(parameters.query);
+                if (url.indexOf('?') !== -1)
+                { //Has ?
+                    url += '&' + parameters.query;
                 }
-            };
-
-            xhr.open(parameters.method, url, true);
-            if (typeof exports === 'object' && exports)
-            {
-                xhr.disableHeaderCheck(true); //Disable header check
-                if (typeof parameters.useragent !== 'undefined')
+                else //add ?
                 {
-                    xhr.setRequestHeader('User-Agent', parameters.useragent);
+                    url += '?' + parameters.query;
                 }
+            }
 
-                if (typeof parameters.headers === 'object')
+            //do XHR
+            var xhr = this._getXHR();
+            if (xhr == null) //NO XHR :(
+            {
+                callback(0, {}, null); //return an error code zero
+            }
+            else
+            {
+                var that = this;
+                xhr.onreadystatechange = function ()
                 {
-                    for (var key in parameters.headers)
+                    if (xhr.readyState === 4) //HTTP results!
                     {
-                        if (parameters.headers.hasOwnProperty(key))
+                        if (parameters.datatype === 'json') //json
                         {
-                            xhr.setRequestHeader(key, parameters.headers[key]);
+                            callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
+                        }
+                        else //other
+                        {
+                            callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                        }
+                    }
+                };
+
+                xhr.open(parameters.method, url, true);
+                if (typeof exports === 'object' && exports)
+                {
+                    xhr.disableHeaderCheck(true); //Disable header check
+                    if (typeof parameters.useragent !== 'undefined')
+                    {
+                        xhr.setRequestHeader('User-Agent', parameters.useragent);
+                    }
+
+                    if (typeof parameters.headers === 'object')
+                    {
+                        for (var key in parameters.headers)
+                        {
+                            if (parameters.headers.hasOwnProperty(key))
+                            {
+                                xhr.setRequestHeader(key, parameters.headers[key]);
+                            }
                         }
                     }
                 }
-            }
 
-            if (parameters.method === 'POST')
-            {
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            }
-
-            if (parameters.method === 'POST' || parameters.method === 'PUT')
-            {
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            }
-
-            if (parameters.method === 'POST' || parameters.method === 'PUT')
-            {
-                if (typeof parameters.data !== 'undefined')
+                if (parameters.method === 'POST')
                 {
-                    xhr.send(parameters.data);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                }
+
+                if (parameters.method === 'POST' || parameters.method === 'PUT')
+                {
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                }
+
+                if (parameters.method === 'POST' || parameters.method === 'PUT')
+                {
+                    if (typeof parameters.data !== 'undefined')
+                    {
+                        xhr.send(parameters.data);
+                    }
+                    else
+                    {
+                        xhr.send();
+                    }
                 }
                 else
                 {
                     xhr.send();
                 }
             }
-            else
-            {
-                xhr.send();
-            }
         }
-
     },
     encode: function (str)
     {
