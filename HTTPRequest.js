@@ -50,16 +50,16 @@ var HTTPRequest = {
     {
         parameters = this._key2lower(parameters);
 
-        if (typeof parameters.method == 'undefined')
+        if (typeof parameters.method === 'undefined')
         {
             parameters.method = 'GET';
         }
 
         //CONTENT TYPE
-        if (typeof parameters.datatype != 'undefined')
+        if (typeof parameters.datatype !== 'undefined')
         {
             parameters.datatype = parameters.datatype.toLowerCase();
-            if (parameters.datatype != 'json')
+            if (parameters.datatype !== 'json')
             {
                 console.log('Invalid datatype option');
             }
@@ -70,12 +70,12 @@ var HTTPRequest = {
         }
 
         //data
-        if (typeof parameters.data != 'undefined')
+        if (typeof parameters.data !== 'undefined')
         {
             parameters.data = this._objToQuery(parameters.data);
         }
 
-        if (typeof parameters.query != 'undefined')
+        if (typeof parameters.query !== 'undefined')
         {
             parameters.query = this._objToQuery(parameters.query);
             if (url.indexOf('?') !== -1)
@@ -116,12 +116,12 @@ var HTTPRequest = {
             if (typeof exports === 'object' && exports)
             {
                 xhr.disableHeaderCheck(true); //Disable header check
-                if (typeof parameters.useragent != 'undefined')
+                if (typeof parameters.useragent !== 'undefined')
                 {
                     xhr.setRequestHeader('User-Agent', parameters.useragent);
                 }
 
-                if (typeof parameters.headers == 'object')
+                if (typeof parameters.headers === 'object')
                 {
                     for (var key in parameters.headers)
                     {
