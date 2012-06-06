@@ -115,30 +115,29 @@ var HTTPRequest = {
             xhr.open(parameters.method, url, true);
             if (typeof exports == 'object' && exports)
             {
+                xhr.disableHeaderCheck(true); //Disable header check
                 if (typeof parameters.useragent != 'undefined')
                 {
                     xhr.setRequestHeader('User-Agent', parameters.useragent);
+                }
+
+                if (typeof parameters.headers == 'object')
+                {
+                    for (var key in parameters.headers)
+                    {
+                        xhr.setRequestHeader(key, parameters.headers[key]);
+                    }
                 }
             }
 
             if (parameters.method == 'POST')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                if (typeof parameters.data != 'undefined')
-                {
-                    // xhr.setRequestHeader("Content-length", parameters.data.length);
-                }
-                //xhr.setRequestHeader("Connection", "close");
             }
 
             if (parameters.method == 'POST' || parameters.method == 'PUT')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                if (typeof parameters.data != 'undefined')
-                {
-                    // xhr.setRequestHeader("Content-length", parameters.data.length);
-                }
-                //xhr.setRequestHeader("Connection", "close");
             }
 
             if (parameters.method == 'POST' || parameters.method == 'PUT')

@@ -1,4 +1,4 @@
-#HTTPRequest v0.0.3#
+#HTTPRequest v0.0.4#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript.
 
@@ -73,7 +73,8 @@ takes a decodeed url and Unencode's it, then returns it.
 * `DATATYPE` - the expected content type. See content type section for more details. The value of this isn't case sensitive.
 
 ##serverside only options##
-* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. Setting this ONLY works on the server.
+* `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. This is a alias/shortcut insead of setting your own headers
+* `HEADERS` - An object containing your own defined headers.
 
 ##parameters##
 Everything as options, but also:
@@ -92,13 +93,12 @@ Everything as options, but also:
 * `status` - is an [HTTP code](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) (like 404 or 200)
 * `headers` - is an object with the respone http headers
 * `content` - contains the requests response.
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0c78323195f462132375de677ed6c55df574ba26
 
 ##todo##
-
-**v0.0.4:**
-
-Write a option where any header can be set, this will only work on the serverside. this will also require changes to XMLHttpRequest.js(I have some ideas of a option that will disable the forbidden header check, might fork it, add a optional way to turn it off, use that build for this, and try to see if it get pulled in to the offical version)
 
 **v0.0.5:**
 Clean up and optimize code
