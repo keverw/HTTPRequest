@@ -1,6 +1,6 @@
 #HTTPRequest v0.0.7#
 
-A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript.
+A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for client and server(Node.js) Javascript.
 
 ## Setup##
 
@@ -13,7 +13,7 @@ If you want to use HTTPRequest on the client-side (browser), just include HTTPRe
 	<script type='text/javascript' src='HTTPRequest.js'></script>
 
 ##Example##
-First, you have to do is require the HTTPRequest module (if you're using it client-side, this isn't necessary).
+First, you have to require the HTTPRequest module (if you're using it client-side, this isn't necessary).
 
 	var HTTPRequest = require('HTTPRequest');
 
@@ -35,13 +35,13 @@ A lower level function, but I hope you never really need to use it as `post`, `g
 `post(url, data, callback, options)`
 
 A url, data(object, can be empty also `{}`), callback are required.
-options is not required, but it can be a object.
+options is not required, but it's a object.
 
 ##get##
 `get(url, callback, options)`
 url and callback are required. 
 
-options is not required, but it can be a object.
+options is not required, but it's a object.
 
 ##delete##
 `del(url, callback, options)`
@@ -72,7 +72,7 @@ takes a decodeed url and Unencode's it, then returns it.
 * `DATA` - `'POST'` or `'PUT'` data `string` or `object`
 * `DATATYPE` - the expected content type. See content type section for more details. The value of this isn't case sensitive.
 
-##serverside only options##
+##server side only options##
 * `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. This is a alias/shortcut insead of setting your own headers
 * `HEADERS` - An object containing your own defined headers.
 
@@ -91,11 +91,11 @@ Everything as options, but also:
 
 `status, headers, content`
 
-* `status` - is an [HTTP code](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) (like 404 or 200)
+* `status` - is an [HTTP status code](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) (like 404 or 200)
 * `headers` - is an object with the respone http headers
 * `content` - contains the requests response.
 
 ##credits##
 * `trim` , `encode` and `encode` functions are from [php.js](http://phpjs.org/pages/home)
 * `parseJSON` function is from [jQuery v1.7.2](http://jquery.com/)
-* Major thanks to [node-XMLHttpRequest](https://github.com/driverdan/node-XMLHttpRequest) for giving us a XMLHttpRequest Object, that really helps make this both client/server.
+* Major thanks to [node-XMLHttpRequest](https://github.com/driverdan/node-XMLHttpRequest) for giving us a XMLHttpRequest Object, that really helps make this both client and server side.
