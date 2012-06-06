@@ -1,5 +1,5 @@
 /*
-HTTPRequest v0.0.8
+HTTPRequest v0.0.9
 https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
@@ -136,16 +136,11 @@ var HTTPRequest = {
                 }
             }
 
-            if (parameters.method === 'POST')
-            {
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            }
-
             if (parameters.method === 'POST' || parameters.method === 'PUT')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             }
-
+			
             if (parameters.method === 'POST' || parameters.method === 'PUT')
             {
                 if (typeof parameters.data !== 'undefined')
