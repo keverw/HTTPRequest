@@ -133,19 +133,11 @@ var HTTPRequest = {
             if (parameters.method == 'POST')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                if (typeof parameters.data != 'undefined')
-                {
-                    xhr.setRequestHeader("Content-length", parameters.data.length);
-                }
             }
 
             if (parameters.method == 'POST' || parameters.method == 'PUT')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                if (typeof parameters.data != 'undefined')
-                {
-                    xhr.setRequestHeader("Content-length", parameters.data.length);
-                }
             }
 
             if (parameters.method == 'POST' || parameters.method == 'PUT')
