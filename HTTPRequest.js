@@ -117,6 +117,7 @@ var HTTPRequest = {
             {
                 if (typeof parameters.useragent != 'undefined')
                 {
+                	xhr.disableHeaderCheck(true); //Disable header check
                     xhr.setRequestHeader('User-Agent', parameters.useragent);
                 }
             }
