@@ -96,9 +96,6 @@ Everything as options, but also:
 
 ##todo##
 
-**v0.0.5:**
-Clean up and optimize code
-
 **v0.0.6:**
 Add XML support for `DATATYPE`, maybe?
 
