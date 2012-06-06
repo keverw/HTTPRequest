@@ -89,10 +89,9 @@ Everything as options, but also:
 
 `status, headers, content`
 
-* `status` - is HTTP code (like 404 or 200)
-* `headers` - is a object with the respone headers
-* `content` - The metadata `
-
+* `status` - is an [HTTP code](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) (like 404 or 200)
+* `headers` - is an object with the respone http headers
+* `content` - contains the requests response.
 
 
 ##todo##
