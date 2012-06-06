@@ -58,7 +58,6 @@ var HTTPRequest = {
         //CONTENT TYPE
         if (typeof parameters.datatype == 'string')
         {
-        	console.log('I IS STRING');
             parameters.datatype = parameters.datatype.toLowerCase();
             
             var vaild_types = ['json'];
@@ -102,7 +101,6 @@ var HTTPRequest = {
             {
                 if (xhr.readyState === 4) //HTTP results!
                 {
-                	console.log(parameters.datatype);
                     if (parameters.datatype === 'json') //json
                     {
                         callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
