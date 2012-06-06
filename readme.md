@@ -1,4 +1,4 @@
-#HTTPRequest v0.0.6#
+#HTTPRequest v0.0.7#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript.
 
@@ -85,7 +85,6 @@ Everything as options, but also:
 `DATATYPE` can be set as the type of content you expected from the server.
 
 * [`JSON`](http://en.wikipedia.org/wiki/JSON) - when set as json, callback `contents` will be a object of the JSON when valid JSON, `null` when invalid JSON.
-* [`XML`](http://en.wikipedia.org/wiki/XML) - will convert to a object. If invaild, it will be null. *TODO*
 
 
 ##callback##
