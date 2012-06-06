@@ -125,7 +125,10 @@ var HTTPRequest = {
                 {
                     for (var key in parameters.headers)
                     {
-                        xhr.setRequestHeader(key, parameters.headers[key]);
+                        if (parameters.headers.hasOwnProperty(key))
+                        {
+                            xhr.setRequestHeader(key, parameters.headers[key]);
+                        }
                     }
                 }
             }
@@ -142,7 +145,7 @@ var HTTPRequest = {
 
             if (parameters.method === 'POST' || parameters.method === 'PUT')
             {
-                if (typeof parameters.data != 'undefined')
+                if (typeof parameters.data !== 'undefined')
                 {
                     xhr.send(parameters.data);
                 }
@@ -332,7 +335,10 @@ var HTTPRequest = {
             var str = [];
             for (var key in obj)
             {
-                str.push(this.encode(key) + '=' + this.encode(obj[key]));
+                if (obj.hasOwnProperty(key))
+                {
+                    str.push(this.encode(key) + '=' + this.encode(obj[key]));
+                }
             }
             return str.join('&');
         }
@@ -350,17 +356,20 @@ var HTTPRequest = {
             var header_obj = {};
             for (var key in headers_list)
             {
-                var header = headers_list[key].replace(/\r/g, '');
-
-                if (header.indexOf(':') !== -1)
+                if (headers_list.hasOwnProperty(key))
                 {
-                    var firstcharpos = this._firstcharpos(header, ':');
+                    var header = headers_list[key].replace(/\r/g, '');
 
-                    var field = header.substring(0, firstcharpos).toLowerCase();
-                    var value = header.substring(firstcharpos);
-                    value = value.substring(2);
+                    if (header.indexOf(':') !== -1)
+                    {
+                        var firstcharpos = this._firstcharpos(header, ':');
 
-                    header_obj[field] = value;
+                        var field = header.substring(0, firstcharpos).toLowerCase();
+                        var value = header.substring(firstcharpos);
+                        value = value.substring(2);
+
+                        header_obj[field] = value;
+                    }
                 }
             }
             return header_obj;
