@@ -93,10 +93,6 @@ Everything as options, but also:
 * `status` - is an [HTTP code](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) (like 404 or 200)
 * `headers` - is an object with the respone http headers
 * `content` - contains the requests response.
-<<<<<<< HEAD
-
-=======
->>>>>>> 0c78323195f462132375de677ed6c55df574ba26
 
 ##todo##
 
