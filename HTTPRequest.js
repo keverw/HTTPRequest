@@ -425,7 +425,10 @@ var HTTPRequest = {
             var newobj = {};
             for (var attrname in obj)
             {
-                newobj[attrname.toLowerCase()] = obj[attrname];
+                if (obj.hasOwnProperty(attrname))
+                {
+                    newobj[attrname.toLowerCase()] = obj[attrname];
+                }
             }
             return newobj;
         }
@@ -450,11 +453,18 @@ var HTTPRequest = {
         var obj3 = {};
         for (var attrname in obj1)
         {
-            obj3[attrname] = obj1[attrname];
+            if (obj1.hasOwnProperty(attrname))
+            {
+                obj3[attrname] = obj1[attrname];
+            }
         }
-        for (var attrname in obj2)
+
+        for (var attrname2 in obj2)
         {
-            obj3[attrname] = obj2[attrname];
+            if (obj2.hasOwnProperty(attrname2))
+            {
+                obj3[attrname2] = obj2[attrname2];
+            }
         }
         return obj3;
     }
