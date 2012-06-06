@@ -130,17 +130,17 @@ var HTTPRequest = {
                 }
             }
 
-            if (parameters.method == 'POST')
+            if (parameters.method === 'POST')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             }
 
-            if (parameters.method == 'POST' || parameters.method == 'PUT')
+            if (parameters.method === 'POST' || parameters.method === 'PUT')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             }
 
-            if (parameters.method == 'POST' || parameters.method == 'PUT')
+            if (parameters.method === 'POST' || parameters.method === 'PUT')
             {
                 if (typeof parameters.data != 'undefined')
                 {
