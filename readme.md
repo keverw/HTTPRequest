@@ -1,4 +1,4 @@
-#HTTPRequest v0.0.6#
+#HTTPRequest v0.0.7#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript.
 
