@@ -1,8 +1,7 @@
 /*
-HTTPRequest v0.0.2
+HTTPRequest v0.0.3 Experimental
 https://github.com/keverw/HTTPRequest
 */
-
 var HTTPRequest = {
     //Public
     post: function (url, data, callback, options)
@@ -56,6 +55,20 @@ var HTTPRequest = {
             parameters.method = 'GET';
         }
 
+        //CONTENT TYPE
+        if (typeof parameters.datatype != 'undefined')
+        {
+            parameters.datatype = parameters.datatype.toLowerCase();
+            if (parameters.datatype != 'json')
+            {
+                console.log('Invalid datatype option');
+            }
+        }
+        else
+        {
+            parameters.datatype = null;
+        }
+
         //data
         if (typeof parameters.data != 'undefined')
         {
@@ -86,9 +99,17 @@ var HTTPRequest = {
             var that = this;
             xhr.onreadystatechange = function ()
             {
-                if (xhr.readyState == 4)
+                if (xhr.readyState == 4) //HTTP results!
                 {
-                    callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                    if (parameters.datatype == 'json') //json
+                    {
+                        console.log(that.parseJSON(xhr.responseText)); //temp
+                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                    }
+                    else //other
+                    {
+                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                    }
                 }
             }
             xhr.open(parameters.method, url, true);
@@ -205,6 +226,104 @@ var HTTPRequest = {
         // *     example 3: urldecode('http%3A%2F%2Fwww.google.nl%2Fsearch%3Fq%3Dphp.js%26ie%3Dutf-8%26oe%3Dutf-8%26aq%3Dt%26rls%3Dcom.ubuntu%3Aen-US%3Aunofficial%26client%3Dfirefox-a');
         // *     returns 3: 'http://www.google.nl/search?q=php.js&ie=utf-8&oe=utf-8&aq=t&rls=com.ubuntu:en-US:unofficial&client=firefox-a'
         return decodeURIComponent((str + '').replace(/\+/g, '%20'));
+    },
+    //jQuery - some code ripped from jQuery, and modified to work standalone
+    rvalidchars: /^[\],:{}\s]*$/,
+    rvalidescape: /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,
+    rvalidtokens: /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+    rvalidbraces: /(?:^|:|,)(?:\s*\[)+/g,
+    parseJSON: function (data)
+    {
+        try
+        {
+            if (typeof exports == 'object' && exports) //This is a module, use native JSON parser
+            {
+                return JSON.parse(data);
+            }
+            else //web browser
+            {
+                if (typeof data !== "string" || !data)
+                {
+                    return null;
+                }
+
+                // Make sure leading/trailing whitespace is removed (IE can't handle it)
+                data = this.trim(data);
+
+                // Attempt to parse using the native JSON parser first
+                if (window.JSON && window.JSON.parse)
+                {
+                    return window.JSON.parse(data);
+                }
+
+                // Make sure the incoming data is actual JSON
+                // Logic borrowed from http://json.org/json2.js
+                if (rvalidchars.test(data.replace(rvalidescape, "@").replace(rvalidtokens, "]").replace(rvalidbraces, "")))
+                {
+                    return (new Function("return " + data))();
+                }
+            }
+        }
+        catch (e)
+        {
+            return null;
+        }
+    },
+    trim: function (str, charlist)
+    {
+        // http://kevin.vanzonneveld.net
+        // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+        // +   improved by: mdsjack (http://www.mdsjack.bo.it)
+        // +   improved by: Alexander Ermolaev (http://snippets.dzone.com/user/AlexanderErmolaev)
+        // +      input by: Erkekjetter
+        // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+        // +      input by: DxGx
+        // +   improved by: Steven Levithan (http://blog.stevenlevithan.com)
+        // +    tweaked by: Jack
+        // +   bugfixed by: Onno Marsman
+        // *     example 1: trim('    Kevin van Zonneveld    ');
+        // *     returns 1: 'Kevin van Zonneveld'
+        // *     example 2: trim('Hello World', 'Hdle');
+        // *     returns 2: 'o Wor'
+        // *     example 3: trim(16, 1);
+        // *     returns 3: 6
+        var whitespace, l = 0,
+            i = 0;
+        str += '';
+
+        if (!charlist)
+        {
+            // default list
+            whitespace = " \n\r\t\f\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000";
+        }
+        else
+        {
+            // preg_quote custom list
+            charlist += '';
+            whitespace = charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, '$1');
+        }
+
+        l = str.length;
+        for (i = 0; i < l; i++)
+        {
+            if (whitespace.indexOf(str.charAt(i)) === -1)
+            {
+                str = str.substring(i);
+                break;
+            }
+        }
+
+        l = str.length;
+        for (i = l - 1; i >= 0; i--)
+        {
+            if (whitespace.indexOf(str.charAt(i)) === -1)
+            {
+                str = str.substring(0, i + 1);
+                break;
+            }
+        }
+
+        return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
     },
     //Private
     _objToQuery: function (obj)
