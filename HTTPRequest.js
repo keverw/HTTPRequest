@@ -1,5 +1,5 @@
 /*
-HTTPRequest v0.0.3
+HTTPRequest v0.0.5
 https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
@@ -50,16 +50,16 @@ var HTTPRequest = {
     {
         parameters = this._key2lower(parameters);
 
-        if (typeof parameters.method == 'undefined')
+        if (typeof parameters.method === 'undefined')
         {
             parameters.method = 'GET';
         }
 
         //CONTENT TYPE
-        if (typeof parameters.datatype != 'undefined')
+        if (typeof parameters.datatype !== 'undefined')
         {
             parameters.datatype = parameters.datatype.toLowerCase();
-            if (parameters.datatype != 'json')
+            if (parameters.datatype !== 'json')
             {
                 console.log('Invalid datatype option');
             }
@@ -70,12 +70,12 @@ var HTTPRequest = {
         }
 
         //data
-        if (typeof parameters.data != 'undefined')
+        if (typeof parameters.data !== 'undefined')
         {
             parameters.data = this._objToQuery(parameters.data);
         }
 
-        if (typeof parameters.query != 'undefined')
+        if (typeof parameters.query !== 'undefined')
         {
             parameters.query = this._objToQuery(parameters.query);
             if (url.indexOf('?') !== -1)
@@ -99,11 +99,10 @@ var HTTPRequest = {
             var that = this;
             xhr.onreadystatechange = function ()
             {
-                if (xhr.readyState == 4) //HTTP results!
+                if (xhr.readyState === 4) //HTTP results!
                 {
-                    if (parameters.datatype == 'json') //json
+                    if (parameters.datatype === 'json') //json
                     {
-                        console.log(that.parseJSON(xhr.responseText)); //temp
                         callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
                     }
                     else //other
@@ -111,38 +110,42 @@ var HTTPRequest = {
                         callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
                     }
                 }
-            }
+            };
+
             xhr.open(parameters.method, url, true);
-            if (typeof exports == 'object' && exports)
+            if (typeof exports === 'object' && exports)
             {
                 xhr.disableHeaderCheck(true); //Disable header check
-                if (typeof parameters.useragent != 'undefined')
+                if (typeof parameters.useragent !== 'undefined')
                 {
                     xhr.setRequestHeader('User-Agent', parameters.useragent);
                 }
 
-                if (typeof parameters.headers == 'object')
+                if (typeof parameters.headers === 'object')
                 {
                     for (var key in parameters.headers)
                     {
-                        xhr.setRequestHeader(key, parameters.headers[key]);
+                        if (parameters.headers.hasOwnProperty(key))
+                        {
+                            xhr.setRequestHeader(key, parameters.headers[key]);
+                        }
                     }
                 }
             }
 
-            if (parameters.method == 'POST')
+            if (parameters.method === 'POST')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             }
 
-            if (parameters.method == 'POST' || parameters.method == 'PUT')
+            if (parameters.method === 'POST' || parameters.method === 'PUT')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             }
 
-            if (parameters.method == 'POST' || parameters.method == 'PUT')
+            if (parameters.method === 'POST' || parameters.method === 'PUT')
             {
-                if (typeof parameters.data != 'undefined')
+                if (typeof parameters.data !== 'undefined')
                 {
                     xhr.send(parameters.data);
                 }
@@ -235,7 +238,7 @@ var HTTPRequest = {
     {
         try
         {
-            if (typeof exports == 'object' && exports) //This is a module, use native JSON parser
+            if (typeof exports === 'object' && exports) //This is a module, use native JSON parser
             {
                 return JSON.parse(data);
             }
@@ -327,12 +330,15 @@ var HTTPRequest = {
     //Private
     _objToQuery: function (obj)
     {
-        if (typeof obj == 'object')
+        if (typeof obj === 'object')
         {
             var str = [];
             for (var key in obj)
             {
-                str.push(this.encode(key) + '=' + this.encode(obj[key]));
+                if (obj.hasOwnProperty(key))
+                {
+                    str.push(this.encode(key) + '=' + this.encode(obj[key]));
+                }
             }
             return str.join('&');
         }
@@ -350,17 +356,20 @@ var HTTPRequest = {
             var header_obj = {};
             for (var key in headers_list)
             {
-                var header = headers_list[key].replace(/\r/g, '');
-
-                if (header.indexOf(':') !== -1)
+                if (headers_list.hasOwnProperty(key))
                 {
-                    var firstcharpos = this._firstcharpos(header, ':');
+                    var header = headers_list[key].replace(/\r/g, '');
 
-                    var field = header.substring(0, firstcharpos).toLowerCase();
-                    var value = header.substring(firstcharpos);
-                    value = value.substring(2);
+                    if (header.indexOf(':') !== -1)
+                    {
+                        var firstcharpos = this._firstcharpos(header, ':');
 
-                    header_obj[field] = value;
+                        var field = header.substring(0, firstcharpos).toLowerCase();
+                        var value = header.substring(firstcharpos);
+                        value = value.substring(2);
+
+                        header_obj[field] = value;
+                    }
                 }
             }
             return header_obj;
@@ -375,7 +384,7 @@ var HTTPRequest = {
         var letters = string.split('');
         for (var key in letters)
         {
-            if (letters[key] == c)
+            if (letters[key] === c)
             {
                 return key;
             }
@@ -384,7 +393,7 @@ var HTTPRequest = {
     },
     _getXHR: function ()
     {
-        if (typeof exports == 'object' && exports) //This is a module, require XHR support.
+        if (typeof exports === 'object' && exports) //This is a module, require XHR support.
         {
             XMLHttpRequest = require('./lib/XMLHttpRequest.js').XMLHttpRequest; //Using xmlhttprequest 1.4.0 https://github.com/driverdan/node-XMLHttpRequest
             return new XMLHttpRequest();
@@ -425,7 +434,10 @@ var HTTPRequest = {
             var newobj = {};
             for (var attrname in obj)
             {
-                newobj[attrname.toLowerCase()] = obj[attrname];
+                if (obj.hasOwnProperty(attrname))
+                {
+                    newobj[attrname.toLowerCase()] = obj[attrname];
+                }
             }
             return newobj;
         }
@@ -437,12 +449,12 @@ var HTTPRequest = {
     _mergeobjs: function (obj1, obj2)
     {
         //Make sure they are objects!
-        if (typeof obj1 != 'object')
+        if (typeof obj1 !== 'object')
         {
             obj1 = {};
         }
 
-        if (typeof obj2 != 'object')
+        if (typeof obj2 !== 'object')
         {
             obj2 = {};
         }
@@ -450,18 +462,25 @@ var HTTPRequest = {
         var obj3 = {};
         for (var attrname in obj1)
         {
-            obj3[attrname] = obj1[attrname];
+            if (obj1.hasOwnProperty(attrname))
+            {
+                obj3[attrname] = obj1[attrname];
+            }
         }
-        for (var attrname in obj2)
+
+        for (var attrname2 in obj2)
         {
-            obj3[attrname] = obj2[attrname];
+            if (obj2.hasOwnProperty(attrname2))
+            {
+                obj3[attrname2] = obj2[attrname2];
+            }
         }
         return obj3;
     }
 };
 
 // Make a Node module, if possible.
-if (typeof exports == 'object' && exports)
+if (typeof exports === 'object' && exports)
 {
     module.exports = HTTPRequest;
 }

@@ -9,7 +9,7 @@ function test_Get()
 {
 	HTTPRequest.get('get_test.php', function(status, headers, content)
 	{
-		console.log(status, headers, content)
+		console.log(status, headers, content);
 	});
 	
 	return false;
@@ -19,7 +19,7 @@ function test_Post()
 {
 	HTTPRequest.post('http://localhost/post_test.php', {hello: 'world'} ,function(status, headers, content)
 	{
-		console.log(status, headers, content)
+		console.log(status, headers, content);
 	});
 	return false;
 }
@@ -28,10 +28,9 @@ function test_JSON()
 {
 	HTTPRequest.get('http://localhost/json.php', function(status, headers, content)
 	{
-		console.log(status, headers, content)
+		console.log(status, headers, content);
 	},{DATATYPE: 'json'});
 }
-
 </script>
 </head>
 <body>
