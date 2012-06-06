@@ -59,7 +59,7 @@ var HTTPRequest = {
         if (typeof parameters.datatype !== 'undefined')
         {
             parameters.datatype = parameters.datatype.toLowerCase();
-            if (parameters.datatype !== 'json')
+            if (parameters.datatype !== 'json' || parameters.datatype !== 'xml')
             {
                 console.log('Invalid datatype option');
             }
@@ -103,7 +103,11 @@ var HTTPRequest = {
                 {
                     if (parameters.datatype === 'json') //json
                     {
-                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+                        callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
+                    }
+                    else if (parameters.datatype === 'json') //xml
+                    {
+                    	callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
                     }
                     else //other
                     {

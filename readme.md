@@ -1,4 +1,4 @@
-#HTTPRequest v0.0.5#
+#HTTPRequest v0.0.6#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for clientside and Serverside(Node.js) Javascript.
 
@@ -82,9 +82,11 @@ Everything as options, but also:
 `METHOD` - string - `'GET'`, `'POST'`, `'PUT'` and `'DELETE'`, default is `'GET'`
 
 ##DATATYPE##
-`DATATYPE` can be set as the type of content you expected from the server. **currently only [JSON](http://en.wikipedia.org/wiki/JSON) is supported**
+`DATATYPE` can be set as the type of content you expected from the server.
 
-* `JSON` - when set as json, callback `contents` will be a object of the JSON when valid JSON, `null` when invalid JSON.
+* [`JSON`](http://en.wikipedia.org/wiki/JSON) - when set as json, callback `contents` will be a object of the JSON when valid JSON, `null` when invalid JSON.
+* [`XML`](http://en.wikipedia.org/wiki/XML) - will convert to a object. If invaild, it will be null. *TODO*
+
 
 ##callback##
 
@@ -93,11 +95,6 @@ Everything as options, but also:
 * `status` - is an [HTTP code](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) (like 404 or 200)
 * `headers` - is an object with the respone http headers
 * `content` - contains the requests response.
-
-##todo##
-
-**v0.0.6:**
-Add XML support for `DATATYPE`, maybe?
 
 ##credits##
 * `trim` , `encode` and `encode` functions are from [php.js](http://phpjs.org/pages/home)
