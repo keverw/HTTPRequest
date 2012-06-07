@@ -1,6 +1,6 @@
 #HTTPRequest v0.0.9#
 
-A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for client and server(Node.js) Javascript.
+A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for client(framework independent) and server(Node.js) Javascript.
 
 ## Setup##
 
@@ -97,5 +97,5 @@ Everything as options, but also:
 
 ##credits##
 * `trim` , `encode` and `encode` functions are from [php.js](http://phpjs.org/pages/home)
-* `parseJSON` function is from [jQuery v1.7.2](http://jquery.com/)
+* `parseJSON` function is from [jQuery v1.7.2](http://jquery.com/), but does not require jQuery as it's inclued in the same namespace.
 * Major thanks to [node-XMLHttpRequest](https://github.com/driverdan/node-XMLHttpRequest) for giving us a XMLHttpRequest Object, that really helps make this both client and server side.
