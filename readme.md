@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/keverw/HTTPRequest.png)](http://travis-ci.org/keverw/HTTPRequest)
 #HTTPRequest v0.0.9#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for client(framework independent) and server(Node.js) Javascript.
