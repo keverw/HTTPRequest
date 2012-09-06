@@ -1,4 +1,4 @@
 <?php
-header('Content-type: text/plain');
-print_r( apache_request_headers() );
+	header('Content-type: text/plain');
+	print_r(apache_request_headers());
 ?>
