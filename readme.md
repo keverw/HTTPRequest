@@ -1,7 +1,10 @@
 [![build status](https://secure.travis-ci.org/keverw/HTTPRequest.png)](http://travis-ci.org/keverw/HTTPRequest)
-#HTTPRequest v0.0.9#
+#HTTPRequest v0.1.0 Alpha#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for client(framework independent) and server(Node.js) Javascript.
+
+##TODO
+The goals for this version is to create a callback for when ajax stops, and when ajax ends. So once all http requests are done, a loader spinner can stop.
 
 ## Setup##
 
