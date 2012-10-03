@@ -153,6 +153,20 @@ var HTTPRequest = {
 		this._processXHR(xhr, newID, parameters, url, callback);
 		return newID;
 	},
+	stopID: function (id)
+	{
+		if (typeof this._pendingXHRs[id] == 'object')
+		{
+			if (this._pendingXHRs[id].xhr == null)
+			{
+				this._processdID(id);
+			}
+			else
+			{
+				this._pendingXHRs[id].xhr.abort();
+			}
+		}
+	},
 	encode: function (str)
 	{
 		// URL-encodes string  
@@ -323,22 +337,23 @@ var HTTPRequest = {
 	_pendingXHRs: {},
 	_TAGS: {},
 	_processdID: function(id)
-	{	
+	{
+		console.log(this._pendingXHRs[id]);
+		
+		var tag = this._pendingXHRs[id].tag;
 		if (this.processedCallback != undefined)
 		{
-			this.processedCallback(this._pendingXHRs[id].tag, id);
+			this.processedCallback(tag, id);
 		}
 		
-		this._TAGS[this._pendingXHRs[id].tag].splice(this._TAGS[this._pendingXHRs[id].tag].indexOf(id), 1);
+		this._TAGS[tag].splice(this._TAGS[tag].indexOf(id), 1);
 		
-		if (this._TAGS[this._pendingXHRs[id].tag].length == 0)
+		if (this._TAGS[tag].length == 0)
 		{
-			delete this._TAGS[this._pendingXHRs[id].tag];
+			delete this._TAGS[tag];
 		}
 		
 		delete this._pendingXHRs[id];
-		
-		console.log(this._TAGS);
 	},
 	_processXHR: function(xhr, id, parameters, url, callback)
 	{
