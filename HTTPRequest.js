@@ -4,7 +4,7 @@ https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
 	//Public
-	pendingXHRs: [],
+	pendingXHRs: {},
 	AjaxStartCallback: null,
 	AjaxStopCallback: null,
 	setAjaxStart: function(callback)
@@ -82,13 +82,13 @@ var HTTPRequest = {
 		{
 			parameters.datatype = null;
 		}
-
+		
 		//data
 		if (typeof parameters.data !== 'undefined')
 		{
 			parameters.data = this._objToQuery(parameters.data);
 		}
-
+		
 		if (typeof parameters.query !== 'undefined')
 		{
 			parameters.query = this._objToQuery(parameters.query);
@@ -104,9 +104,11 @@ var HTTPRequest = {
 
 		//do XHR
 		var xhr = this._getXHR();
-		this.pendingXHRs.push(xhr);
+		var newID = this._grabNewID();
 		
-		if (this.pendingXHRs.length == 1)
+		this.pendingXHRs[newID] = xhr;
+		
+		if (this._numKeys(this.pendingXHRs) == 1)
 		{
 			if (this.AjaxStartCallback != undefined)
 			{
@@ -114,8 +116,8 @@ var HTTPRequest = {
 			}
 		}
 		
-		this._processXHR(xhr, parameters, url, callback);
-		return 'id here';
+		this._processXHR(xhr, newID, parameters, url, callback);
+		return newID;
 	},
 	encode: function (str)
 	{
@@ -284,11 +286,11 @@ var HTTPRequest = {
 		return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
 	},
 	//Private
-	_processXHR: function(xhr, parameters, url, callback)
+	_processXHR: function(xhr, id, parameters, url, callback)
 	{
 		if (xhr == null) //NO XHR :(
 		{
-			this.pendingXHRs.splice(pendingXHRs.indexOf(xhr), 1);
+			delete this.pendingXHRs[id];
 			callback(0, {}, null); //return an error code zero
 			this._stopAjaxLoader();
 		}
@@ -308,7 +310,7 @@ var HTTPRequest = {
 						callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
 					}
 					
-					that.pendingXHRs.splice(that.pendingXHRs.indexOf(xhr), 1);
+					delete that.pendingXHRs[id];
 					that._stopAjaxLoader();
 				}
 			};
@@ -363,7 +365,7 @@ var HTTPRequest = {
 	},
 	_stopAjaxLoader: function()
 	{
-		if (this.pendingXHRs.length == 0)
+		if (this._numKeys(this.pendingXHRs) == 0)
 		{
 			if (this.AjaxStopCallback != undefined)
 			{
@@ -433,6 +435,15 @@ var HTTPRequest = {
 			}
 		}
 		return null;
+	},
+	_numKeys: function(obj)
+	{
+	    var count = 0;
+	    for(var prop in obj)
+	    {
+	        count++;
+	    }
+	    return count;
 	},
 	_getXHR: function ()
 	{
