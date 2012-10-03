@@ -438,10 +438,10 @@ var HTTPRequest = {
 			}
 		}
 	},
-	lastID: 1,
+	_lastID: 1,
 	_grabNewID: function()
 	{
-		return this.lastID++;
+		return this._lastID++;
 	},
 	_stopAjaxLoader: function()
 	{
