@@ -7,6 +7,7 @@ var HTTPRequest = {
 	pendingXHRs: {},
 	AjaxStartCallback: null,
 	AjaxStopCallback: null,
+	processedCallback: null,
 	setAjaxStart: function(callback)
 	{
 		this.AjaxStartCallback = callback;
@@ -14,6 +15,10 @@ var HTTPRequest = {
 	setAjaxStop: function(callback)
 	{
 		this.AjaxStopCallback = callback;
+	},
+	setProcessedCallback: function(callback)
+	{
+		this.processedCallback = callback;
 	},
 	post: function (url, data, callback, options)
 	{
@@ -286,11 +291,20 @@ var HTTPRequest = {
 		return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
 	},
 	//Private
+	_processdID: function(id)
+	{
+		if (this.processedCallback != undefined)
+		{
+			this.processedCallback(id);
+		}
+	},
 	_processXHR: function(xhr, id, parameters, url, callback)
 	{
 		if (xhr == null) //NO XHR :(
 		{
 			delete this.pendingXHRs[id];
+			this._processdID(id);
+			
 			callback(0, {}, null); //return an error code zero
 			this._stopAjaxLoader();
 		}
@@ -311,6 +325,7 @@ var HTTPRequest = {
 					}
 					
 					delete that.pendingXHRs[id];
+					that._processdID(id);
 					that._stopAjaxLoader();
 				}
 			};

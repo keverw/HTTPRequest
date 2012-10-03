@@ -6,6 +6,13 @@
 <script type="text/javascript" src="../HTTPRequest.js"></script>
 <script type="text/javascript">
 
+function processedID(id)
+{
+	console.log('processed: ' + id);
+}
+
+HTTPRequest.setProcessedCallback(processedID);
+
 function ajaxLoaderStart()
 {
 	console.log('Started');
