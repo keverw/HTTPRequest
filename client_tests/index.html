@@ -22,10 +22,12 @@ HTTPRequest.setAjaxStop(ajaxLoaderStop);
 
 function test_Get()
 {
-	HTTPRequest.get('http://ajaxtests/get_test.php', function(status, headers, content)
+	var reqID = HTTPRequest.get('http://ajaxtests/get_test.php', function(status, headers, content)
 	{
 		console.log(status, headers, content);
 	});
+	
+	console.log(reqID);
 	
 	return false;
 }

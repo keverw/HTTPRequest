@@ -1,7 +1,10 @@
 [![build status](https://secure.travis-ci.org/keverw/HTTPRequest.png)](http://travis-ci.org/keverw/HTTPRequest)
-#HTTPRequest v0.1.0#
+#HTTPRequest v0.1.1 ALPHA#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for client(framework independent) and server(Node.js) Javascript.
+
+## Version Goal##
+To allow http requests to be aborted. like xhr.abort
 
 ## Setup##
 

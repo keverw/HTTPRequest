@@ -1,5 +1,5 @@
 /*
-HTTPRequest v0.1
+HTTPRequest v0.1.1 Alpha
 https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
@@ -24,7 +24,7 @@ var HTTPRequest = {
 
 		var request_parms = this._mergeobjs(options, parameters);
 
-		this.request(url, request_parms, callback, options);
+		return this.request(url, request_parms, callback, options);
 	},
 	put: function (url, data, callback, options)
 	{
@@ -35,7 +35,7 @@ var HTTPRequest = {
 
 		var request_parms = this._mergeobjs(options, parameters);
 
-		this.request(url, request_parms, callback, options);
+		return this.request(url, request_parms, callback, options);
 	},
 	get: function (url, callback, options)
 	{
@@ -45,7 +45,7 @@ var HTTPRequest = {
 
 		var request_parms = this._mergeobjs(options, parameters);
 
-		this.request(url, request_parms, callback);
+		return this.request(url, request_parms, callback);
 	},
 	del: function (url, callback, options)
 	{
@@ -55,7 +55,7 @@ var HTTPRequest = {
 
 		var request_parms = this._mergeobjs(options, parameters);
 
-		this.request(url, request_parms, callback);
+		return this.request(url, request_parms, callback);
 	},
 	request: function (url, parameters, callback)
 	{
@@ -114,75 +114,8 @@ var HTTPRequest = {
 			}
 		}
 		
-		if (xhr == null) //NO XHR :(
-		{
-			this.pendingXHRs.splice(pendingXHRs.indexOf(xhr), 1);
-			callback(0, {}, null); //return an error code zero
-			this._stopAjaxLoader();
-		}
-		else
-		{
-			var that = this;
-			xhr.onreadystatechange = function ()
-			{
-				if (xhr.readyState === 4) //HTTP results!
-				{
-					if (parameters.datatype === 'json') //json
-					{
-						callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
-					}
-					else //other
-					{
-						callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
-					}
-					
-					that.pendingXHRs.splice(that.pendingXHRs.indexOf(xhr), 1);
-					that._stopAjaxLoader();
-				}
-			};
-
-			xhr.open(parameters.method, url, true);
-			if (typeof exports === 'object' && exports)
-			{
-				xhr.disableHeaderCheck(true); //Disable header check
-				if (typeof parameters.useragent !== 'undefined')
-				{
-					xhr.setRequestHeader('User-Agent', parameters.useragent);
-				}
-
-				if (typeof parameters.headers === 'object')
-				{
-					for (var key in parameters.headers)
-					{
-						if (parameters.headers.hasOwnProperty(key))
-						{
-							xhr.setRequestHeader(key, parameters.headers[key]);
-						}
-					}
-				}
-			}
-
-			if (parameters.method === 'POST' || parameters.method === 'PUT')
-			{
-				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			}
-			
-			if (parameters.method === 'POST' || parameters.method === 'PUT')
-			{
-				if (typeof parameters.data !== 'undefined')
-				{
-					xhr.send(parameters.data);
-				}
-				else
-				{
-					xhr.send();
-				}
-			}
-			else
-			{
-				xhr.send();
-			}
-		}
+		this._processXHR(xhr, parameters, url, callback);
+		return 'id here';
 	},
 	encode: function (str)
 	{
@@ -351,6 +284,78 @@ var HTTPRequest = {
 		return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
 	},
 	//Private
+	_processXHR: function(xhr, parameters, url, callback)
+	{
+		if (xhr == null) //NO XHR :(
+		{
+			this.pendingXHRs.splice(pendingXHRs.indexOf(xhr), 1);
+			callback(0, {}, null); //return an error code zero
+			this._stopAjaxLoader();
+		}
+		else
+		{
+			var that = this;
+			xhr.onreadystatechange = function ()
+			{
+				if (xhr.readyState === 4) //HTTP results!
+				{
+					if (parameters.datatype === 'json') //json
+					{
+						callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
+					}
+					else //other
+					{
+						callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+					}
+					
+					that.pendingXHRs.splice(that.pendingXHRs.indexOf(xhr), 1);
+					that._stopAjaxLoader();
+				}
+			};
+
+			xhr.open(parameters.method, url, true);
+			if (typeof exports === 'object' && exports)
+			{
+				xhr.disableHeaderCheck(true); //Disable header check
+				if (typeof parameters.useragent !== 'undefined')
+				{
+					xhr.setRequestHeader('User-Agent', parameters.useragent);
+				}
+
+				if (typeof parameters.headers === 'object')
+				{
+					for (var key in parameters.headers)
+					{
+						if (parameters.headers.hasOwnProperty(key))
+						{
+							xhr.setRequestHeader(key, parameters.headers[key]);
+						}
+					}
+				}
+			}
+
+			if (parameters.method === 'POST' || parameters.method === 'PUT')
+			{
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			}
+			
+			if (parameters.method === 'POST' || parameters.method === 'PUT')
+			{
+				if (typeof parameters.data !== 'undefined')
+				{
+					xhr.send(parameters.data);
+				}
+				else
+				{
+					xhr.send();
+				}
+			}
+			else
+			{
+				xhr.send();
+			}
+		}
+	},
 	_stopAjaxLoader: function()
 	{
 		if (this.pendingXHRs.length == 0)
