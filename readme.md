@@ -121,6 +121,28 @@ HTTPRequest.setAjaxStop(ajaxLoaderStop); //this get's called when all the pendin
 
 These are great for providing a loading spinner on the page.
 
+##Processed ID Callback 
+
+```
+function processedID(tag, id)
+{
+	console.log('processed: ' + tag + ' , ' + id);
+}
+
+HTTPRequest.setProcessedCallback(processedID);
+
+```
+
+##New Request Callback
+```
+function newRequestID(tag, id)
+{
+	console.log('new id: ' + tag + ' , ' + id);
+}
+
+HTTPRequest.setnewRequestCallback(newRequestID);
+
+```
 
 ##credits##
 * `trim` , `encode` and `encode` functions are from [php.js](http://phpjs.org/pages/home)
