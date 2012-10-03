@@ -167,6 +167,16 @@ var HTTPRequest = {
 			}
 		}
 	},
+	stopAll: function()
+	{
+		for (var key in this._pendingXHRs)
+		{
+			if (this._pendingXHRs.hasOwnProperty(key))
+			{
+				this.stopID(key);
+			}
+		}	
+	},
 	encode: function (str)
 	{
 		// URL-encodes string  
