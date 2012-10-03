@@ -1,9 +1,10 @@
 /*
-HTTPRequest v0.0.9
+HTTPRequest v0.1
 https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
 	//Public
+	pendingXHRs: [],
 	post: function (url, data, callback, options)
 	{
 		var parameters = {
@@ -93,9 +94,18 @@ var HTTPRequest = {
 
 		//do XHR
 		var xhr = this._getXHR();
+		this.pendingXHRs.push(xhr);
+		
+		if (this.pendingXHRs.length == 1)
+		{
+			console.log('start ajax spend');
+		}
+		
 		if (xhr == null) //NO XHR :(
 		{
+			this.pendingXHRs.splice(pendingXHRs.indexOf(xhr), 1);
 			callback(0, {}, null); //return an error code zero
+			this._stopAjaxLoader();
 		}
 		else
 		{
@@ -112,6 +122,9 @@ var HTTPRequest = {
 					{
 						callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
 					}
+					
+					that.pendingXHRs.splice(that.pendingXHRs.indexOf(xhr), 1);
+					that._stopAjaxLoader();
 				}
 			};
 
@@ -325,6 +338,13 @@ var HTTPRequest = {
 		return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
 	},
 	//Private
+	_stopAjaxLoader: function()
+	{
+		if (this.pendingXHRs.length == 0)
+		{
+			console.log('stop ajax spend');
+		}
+	},
 	_objToQuery: function (obj)
 	{
 		if (typeof obj === 'object')
