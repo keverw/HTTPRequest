@@ -4,7 +4,6 @@ https://github.com/keverw/HTTPRequest
 */
 var HTTPRequest = {
 	//Public
-	pendingXHRs: {},
 	AjaxStartCallback: null,
 	AjaxStopCallback: null,
 	processedCallback: null,
@@ -124,7 +123,7 @@ var HTTPRequest = {
 			currentTag = parameters.tag;
 		}
 		
-		this.pendingXHRs[newID] = {
+		this._pendingXHRs[newID] = {
 			xhr:xhr,
 			tag: currentTag
 		};
@@ -134,7 +133,7 @@ var HTTPRequest = {
 			this.newRequestCallback(currentTag, newID);
 		}
 		
-		if (this._numKeys(this.pendingXHRs) == 1)
+		if (this._numKeys(this._pendingXHRs) == 1)
 		{
 			if (this.AjaxStartCallback != undefined)
 			{
@@ -312,13 +311,14 @@ var HTTPRequest = {
 		return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
 	},
 	//Private
+	_pendingXHRs: {},
 	_processdID: function(id)
 	{	
 		if (this.processedCallback != undefined)
 		{
-			this.processedCallback(this.pendingXHRs[id].tag, id);
+			this.processedCallback(this._pendingXHRs[id].tag, id);
 		}
-		delete this.pendingXHRs[id];
+		delete this._pendingXHRs[id];
 	},
 	_processXHR: function(xhr, id, parameters, url, callback)
 	{
@@ -400,7 +400,7 @@ var HTTPRequest = {
 	},
 	_stopAjaxLoader: function()
 	{
-		if (this._numKeys(this.pendingXHRs) == 0)
+		if (this._numKeys(this._pendingXHRs) == 0)
 		{
 			if (this.AjaxStopCallback != undefined)
 			{

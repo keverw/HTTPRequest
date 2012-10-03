@@ -6,6 +6,10 @@ A simple yet powerful HTTP request library inspired by jQuery and LSL written in
 ## Version Goal##
 To allow http requests to be aborted. like xhr.abort
 
+.stopID(id)
+.stopTag(tag)
+.stopAll()
+
 ## Setup##
 
 To set up HTTPRequest on your Node.js server use npm(case sensitive package name).
