@@ -1,10 +1,7 @@
 [![build status](https://secure.travis-ci.org/keverw/HTTPRequest.png)](http://travis-ci.org/keverw/HTTPRequest)
-#HTTPRequest v0.1.0 Alpha#
+#HTTPRequest v0.1.0#
 
 A simple yet powerful HTTP request library inspired by jQuery and LSL written in Javascript for client(framework independent) and server(Node.js) Javascript.
-
-##TODO
-The goals for this version is to create a callback for when ajax stops, and when ajax ends. So once all http requests are done, a loader spinner can stop.
 
 ## Setup##
 
@@ -98,6 +95,28 @@ Everything as options, but also:
 * `status` - is an [HTTP status code](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) (like 404 or 200)
 * `headers` - is an object with the respone http headers
 * `content` - contains the requests response.
+
+##Ajax stop and start callbacks
+
+```
+function ajaxLoaderStart()
+{
+	console.log('Started');
+}
+
+HTTPRequest.setAjaxStart(ajaxLoaderStart); //this call back is called when no pending HTTP requests exists.
+
+function ajaxLoaderStop()
+{
+	console.log('Stopped');
+}
+
+HTTPRequest.setAjaxStop(ajaxLoaderStop); //this get's called when all the pending HTTP requests are finished.
+
+```
+
+These are great for providing a loading spinner on the page.
+
 
 ##credits##
 * `trim` , `encode` and `encode` functions are from [php.js](http://phpjs.org/pages/home)
