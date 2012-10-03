@@ -1,5 +1,5 @@
 /*
-HTTPRequest v0.1.1 Alpha
+HTTPRequest v0.1.1
 https://github.com/keverw/HTTPRequest
 */
 
