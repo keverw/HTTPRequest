@@ -163,6 +163,7 @@ var HTTPRequest = {
 			}
 			else
 			{
+				this._abortedXHRs.push(this._pendingXHRs[id].xhr);
 				this._pendingXHRs[id].xhr.abort();
 			}
 		}
@@ -346,6 +347,7 @@ var HTTPRequest = {
 	//Private
 	_pendingXHRs: {},
 	_TAGS: {},
+	_abortedXHRs: [],
 	_processdID: function(id)
 	{
 		console.log(this._pendingXHRs[id]);
@@ -381,13 +383,20 @@ var HTTPRequest = {
 			{
 				if (xhr.readyState === 4) //HTTP results!
 				{
-					if (parameters.datatype === 'json') //json
+					if (that._abortedXHRs.indexOf(xhr) >= 0)
 					{
-						callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
+						that._abortedXHRs.splice(that._abortedXHRs.indexOf(xhr), 1);
 					}
-					else //other
+					else
 					{
-						callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+						if (parameters.datatype === 'json') //json
+						{
+							callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), that.parseJSON(xhr.responseText));
+						}
+						else //other
+						{
+							callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
+						}
 					}
 					
 					that._processdID(id);

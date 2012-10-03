@@ -37,8 +37,10 @@ A lower level function, but I hope you never really need to use it as `post`, `g
 ##stop requests##
 
 * `stopID(id)`
-* `stopTag(tag)`
+* `stopTag(tag)` *TODO*
 * `stopAll()`
+
+When a request is stopped, the callback isn't called for the request.
 
 ##post##
 
