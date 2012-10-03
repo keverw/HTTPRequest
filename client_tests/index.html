@@ -5,9 +5,17 @@
 <title>Client Tests</title>
 <script type="text/javascript" src="../HTTPRequest.js"></script>
 <script type="text/javascript">
+
+function ajaxLoaderStart()
+{
+	console.log('Started');
+}
+
+HTTPRequest.setAjaxStart(ajaxLoaderStart);
+
 function test_Get()
 {
-	HTTPRequest.get('get_test.php', function(status, headers, content)
+	HTTPRequest.get('http://ajaxtests/get_test.php', function(status, headers, content)
 	{
 		console.log(status, headers, content);
 	});
@@ -17,7 +25,7 @@ function test_Get()
 
 function test_Post()
 {
-	HTTPRequest.post('http://localhost/post_test.php', {hello: 'world'} ,function(status, headers, content)
+	HTTPRequest.post('http://ajaxtests/post_test.php', {hello: 'world'} ,function(status, headers, content)
 	{
 		console.log(status, headers, content);
 	});
@@ -26,7 +34,7 @@ function test_Post()
 
 function test_JSON()
 {
-	HTTPRequest.get('http://localhost/json.php', function(status, headers, content)
+	HTTPRequest.get('http://ajaxtests/json.php', function(status, headers, content)
 	{
 		console.log(status, headers, content);
 	},{DATATYPE: 'json'});

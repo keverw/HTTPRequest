@@ -5,6 +5,11 @@ https://github.com/keverw/HTTPRequest
 var HTTPRequest = {
 	//Public
 	pendingXHRs: [],
+	AjaxStartCallback: null,
+	setAjaxStart: function(callback)
+	{
+		this.AjaxStartCallback = callback;
+	},
 	post: function (url, data, callback, options)
 	{
 		var parameters = {
@@ -98,7 +103,10 @@ var HTTPRequest = {
 		
 		if (this.pendingXHRs.length == 1)
 		{
-			console.log('start ajax spend');
+			if (this.AjaxStartCallback != undefined)
+			{
+				this.AjaxStartCallback();
+			}
 		}
 		
 		if (xhr == null) //NO XHR :(
