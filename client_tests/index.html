@@ -6,6 +6,13 @@
 <script type="text/javascript" src="../HTTPRequest.js"></script>
 <script type="text/javascript">
 
+function newRequestID(tag, id)
+{
+	console.log('new id: ' + tag + ' , ' + id);
+}
+
+HTTPRequest.setnewRequestCallback(newRequestID);
+
 function processedID(tag, id)
 {
 	console.log('processed: ' + tag + ' , ' + id);

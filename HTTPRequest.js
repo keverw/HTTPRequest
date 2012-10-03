@@ -22,6 +22,10 @@ var HTTPRequest = {
 	{
 		this.processedCallback = callback;
 	},
+	setnewRequestCallback: function(callback)
+	{
+		this.newRequestCallback = callback;
+	},
 	post: function (url, data, callback, options)
 	{
 		var parameters = {
@@ -124,6 +128,11 @@ var HTTPRequest = {
 			xhr:xhr,
 			tag: currentTag
 		};
+		
+		if (this.newRequestCallback != undefined)
+		{
+			this.newRequestCallback(currentTag, newID);
+		}
 		
 		if (this._numKeys(this.pendingXHRs) == 1)
 		{
