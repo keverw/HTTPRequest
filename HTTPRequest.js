@@ -8,6 +8,8 @@ var HTTPRequest = {
 	AjaxStartCallback: null,
 	AjaxStopCallback: null,
 	processedCallback: null,
+	newRequestCallback: null, //todo: create a call back called newRequest(id)
+	defaultTag: 'untagged',
 	setAjaxStart: function(callback)
 	{
 		this.AjaxStartCallback = callback;
@@ -65,7 +67,7 @@ var HTTPRequest = {
 	request: function (url, parameters, callback)
 	{
 		parameters = this._key2lower(parameters);
-
+		
 		if (typeof parameters.method === 'undefined')
 		{
 			parameters.method = 'GET';
@@ -111,7 +113,17 @@ var HTTPRequest = {
 		var xhr = this._getXHR();
 		var newID = this._grabNewID();
 		
-		this.pendingXHRs[newID] = xhr;
+		var currentTag = this.defaultTag;
+		
+		if (typeof parameters.tag == 'string')
+		{
+			currentTag = parameters.tag;
+		}
+		
+		this.pendingXHRs[newID] = {
+			xhr:xhr,
+			tag: currentTag
+		};
 		
 		if (this._numKeys(this.pendingXHRs) == 1)
 		{
@@ -292,17 +304,17 @@ var HTTPRequest = {
 	},
 	//Private
 	_processdID: function(id)
-	{
+	{	
 		if (this.processedCallback != undefined)
 		{
-			this.processedCallback(id);
+			this.processedCallback(this.pendingXHRs[id].tag, id);
 		}
+		delete this.pendingXHRs[id];
 	},
 	_processXHR: function(xhr, id, parameters, url, callback)
 	{
 		if (xhr == null) //NO XHR :(
 		{
-			delete this.pendingXHRs[id];
 			this._processdID(id);
 			
 			callback(0, {}, null); //return an error code zero
@@ -324,7 +336,6 @@ var HTTPRequest = {
 						callback(xhr.status, that._headersToHeaders(xhr.getAllResponseHeaders()), xhr.responseText);
 					}
 					
-					delete that.pendingXHRs[id];
 					that._processdID(id);
 					that._stopAjaxLoader();
 				}

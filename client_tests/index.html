@@ -6,9 +6,9 @@
 <script type="text/javascript" src="../HTTPRequest.js"></script>
 <script type="text/javascript">
 
-function processedID(id)
+function processedID(tag, id)
 {
-	console.log('processed: ' + id);
+	console.log('processed: ' + tag + ' , ' + id);
 }
 
 HTTPRequest.setProcessedCallback(processedID);
@@ -32,7 +32,7 @@ function test_Get()
 	var reqID = HTTPRequest.get('http://ajaxtests/get_test.php', function(status, headers, content)
 	{
 		console.log(status, headers, content);
-	});
+	}, {TAG: 'test'});
 	
 	console.log(reqID);
 	

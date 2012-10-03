@@ -75,6 +75,7 @@ takes a decodeed url and Unencode's it, then returns it.
 * `QUERY` - `string` or `object` - appends to the end of the `url`.
 * `DATA` - `'POST'` or `'PUT'` data `string` or `object`
 * `DATATYPE` - the expected content type. See content type section for more details. The value of this isn't case sensitive.
+* `TAG` - a tag to be used in `processedCallback`, `newRequestCallback`, also doesn't have to be unique. The `defaultTag` is `untagged`. You can override the default by `HTTPRequest.defaultTag = 'TextHere';`
 
 ##server side only options##
 * `USERAGENT` - string - Write your own [user agent](http://en.wikipedia.org/wiki/User_agent), default is `node.js`. This is a alias/shortcut insead of setting your own headers
