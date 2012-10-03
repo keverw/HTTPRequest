@@ -356,6 +356,11 @@ var HTTPRequest = {
 			}
 		}
 	},
+	lastID: 1,
+	_grabNewID: function()
+	{
+		return this.lastID++;
+	},
 	_stopAjaxLoader: function()
 	{
 		if (this.pendingXHRs.length == 0)
