@@ -128,6 +128,15 @@ var HTTPRequest = {
 			tag: currentTag
 		};
 		
+		if (typeof this._TAGS[currentTag] != 'object')
+		{
+			this._TAGS[currentTag] = [];	
+		}
+		
+		this._TAGS[currentTag].push(newID);
+		
+		console.log(this._TAGS);
+		
 		if (this.newRequestCallback != undefined)
 		{
 			this.newRequestCallback(currentTag, newID);
@@ -312,13 +321,24 @@ var HTTPRequest = {
 	},
 	//Private
 	_pendingXHRs: {},
+	_TAGS: {},
 	_processdID: function(id)
 	{	
 		if (this.processedCallback != undefined)
 		{
 			this.processedCallback(this._pendingXHRs[id].tag, id);
 		}
+		
+		this._TAGS[this._pendingXHRs[id].tag].splice(this._TAGS[this._pendingXHRs[id].tag].indexOf(id), 1);
+		
+		if (this._TAGS[this._pendingXHRs[id].tag].length == 0)
+		{
+			delete this._TAGS[this._pendingXHRs[id].tag];
+		}
+		
 		delete this._pendingXHRs[id];
+		
+		console.log(this._TAGS);
 	},
 	_processXHR: function(xhr, id, parameters, url, callback)
 	{
