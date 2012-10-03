@@ -6,9 +6,14 @@ var HTTPRequest = {
 	//Public
 	pendingXHRs: [],
 	AjaxStartCallback: null,
+	AjaxStopCallback: null,
 	setAjaxStart: function(callback)
 	{
 		this.AjaxStartCallback = callback;
+	},
+	setAjaxStop: function(callback)
+	{
+		this.AjaxStopCallback = callback;
 	},
 	post: function (url, data, callback, options)
 	{
@@ -350,7 +355,10 @@ var HTTPRequest = {
 	{
 		if (this.pendingXHRs.length == 0)
 		{
-			console.log('stop ajax spend');
+			if (this.AjaxStopCallback != undefined)
+			{
+				this.AjaxStopCallback();
+			}
 		}
 	},
 	_objToQuery: function (obj)

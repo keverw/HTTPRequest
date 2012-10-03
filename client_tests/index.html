@@ -13,6 +13,13 @@ function ajaxLoaderStart()
 
 HTTPRequest.setAjaxStart(ajaxLoaderStart);
 
+function ajaxLoaderStop()
+{
+	console.log('Stopped');
+}
+
+HTTPRequest.setAjaxStop(ajaxLoaderStop);
+
 function test_Get()
 {
 	HTTPRequest.get('http://ajaxtests/get_test.php', function(status, headers, content)
