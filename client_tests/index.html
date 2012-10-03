@@ -51,12 +51,14 @@ function test_LongGet()
 	var reqID = HTTPRequest.get('http://ajaxtests/long_request.php', function(status, headers, content)
 	{
 		console.log(status, headers, content);
-	}, {TAG: 'test'});
+	});
 	
 	console.log(reqID);
 	
 	//HTTPRequest.stopID(1);
 	//HTTPRequest.stopAll();
+	
+	//HTTPRequest.stopTag('untagged');
 	
 	return false;
 }

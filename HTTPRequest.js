@@ -2,12 +2,13 @@
 HTTPRequest v0.1.1 Alpha
 https://github.com/keverw/HTTPRequest
 */
+
 var HTTPRequest = {
 	//Public
 	AjaxStartCallback: null,
 	AjaxStopCallback: null,
 	processedCallback: null,
-	newRequestCallback: null, //todo: create a call back called newRequest(id)
+	newRequestCallback: null,
 	defaultTag: 'untagged',
 	setAjaxStart: function(callback)
 	{
@@ -130,12 +131,10 @@ var HTTPRequest = {
 		
 		if (typeof this._TAGS[currentTag] != 'object')
 		{
-			this._TAGS[currentTag] = [];	
+			this._TAGS[currentTag] = {};	
 		}
 		
-		this._TAGS[currentTag].push(newID);
-		
-		console.log(this._TAGS);
+		this._TAGS[currentTag][newID] = null;
 		
 		if (this.newRequestCallback != undefined)
 		{
@@ -177,6 +176,16 @@ var HTTPRequest = {
 				this.stopID(key);
 			}
 		}	
+	},
+	stopTag: function(tag)
+	{
+		if (typeof this._TAGS[tag] == 'object')
+		{
+			for (var key in this._TAGS[tag])
+			{
+				this.stopID(key);
+			}
+		}
 	},
 	encode: function (str)
 	{
@@ -349,16 +358,14 @@ var HTTPRequest = {
 	_TAGS: {},
 	_abortedXHRs: [],
 	_processdID: function(id)
-	{
-		console.log(this._pendingXHRs[id]);
-		
+	{	
 		var tag = this._pendingXHRs[id].tag;
 		if (this.processedCallback != undefined)
 		{
 			this.processedCallback(tag, id);
 		}
 		
-		this._TAGS[tag].splice(this._TAGS[tag].indexOf(id), 1);
+		delete this._TAGS[tag][id];
 		
 		if (this._TAGS[tag].length == 0)
 		{
