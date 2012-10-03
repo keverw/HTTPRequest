@@ -6,6 +6,13 @@
 <script type="text/javascript" src="../HTTPRequest.js"></script>
 <script type="text/javascript">
 
+//stop functions
+	//HTTPRequest.stopID(1);
+	//HTTPRequest.stopAll();
+	//HTTPRequest.stopTag('untagged');
+	
+//callbacks
+
 function newRequestID(tag, id)
 {
 	console.log('new id: ' + tag + ' , ' + id);
@@ -54,11 +61,6 @@ function test_LongGet()
 	});
 	
 	console.log(reqID);
-	
-	//HTTPRequest.stopID(1);
-	//HTTPRequest.stopAll();
-	
-	//HTTPRequest.stopTag('untagged');
 	
 	return false;
 }
