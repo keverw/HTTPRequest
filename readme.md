@@ -6,10 +6,6 @@ A simple yet powerful HTTP request library inspired by jQuery and LSL written in
 ## Version Goal##
 To allow http requests to be aborted. like xhr.abort
 
-.stopID(id)
-.stopTag(tag)
-.stopAll()
-
 ## Setup##
 
 To set up HTTPRequest on your Node.js server use npm(case sensitive package name).
@@ -37,6 +33,12 @@ HTTPRequest.get('get_test.php', function(status, headers, content)
 ##request##
 `request(url, parameters, callback)`
 A lower level function, but I hope you never really need to use it as `post`, `get` is a wrapper around it.
+
+##stop requests##
+
+* `stopID(id)`
+* `stopTag(tag)`
+* `stopAll()`
 
 ##post##
 
