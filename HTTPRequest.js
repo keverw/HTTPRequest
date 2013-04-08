@@ -1,5 +1,5 @@
 /*
-HTTPRequest v0.1.2
+HTTPRequest v0.1.3
 https://github.com/keverw/HTTPRequest
 */
 
@@ -636,7 +636,7 @@ if (typeof exports === 'object' && exports)
 }
 
 //Export as a AMD module
-if (typeof require === 'function' && require.amd)
+if (typeof define === 'function' && define.amd)
 {
     define(HTTPRequest);
 }
