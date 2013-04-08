@@ -634,3 +634,9 @@ if (typeof exports === 'object' && exports)
 {
 	module.exports = HTTPRequest;
 }
+
+//Export as a AMD module
+if (typeof require === 'function' && require.amd)
+{
+    define(HTTPRequest);
+}
